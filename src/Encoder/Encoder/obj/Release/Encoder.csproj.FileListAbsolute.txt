@@ -1,0 +1,16 @@
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\bin\Release\Encoder.exe.config
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\bin\Release\Encoder.exe
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\bin\Release\Encoder.pdb
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.csproj.SuggestedBindingRedirects.cache
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Views\MainWindow.g.cs
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\App.g.cs
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder_MarkupCompile.cache
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder_MarkupCompile.lref
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\App.baml
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Views\MainWindow.baml
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.g.resources
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.Properties.Resources.resources
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.csproj.GenerateResource.cache
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.csproj.CoreCompileInputs.cache
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.exe
+C:\Users\525.khokhlovns\source\repos\Encoder\Encoder\obj\Release\Encoder.pdb
