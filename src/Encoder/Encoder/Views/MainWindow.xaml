@@ -20,6 +20,12 @@
                 <MenuItem Header="Файл">
                     <MenuItem Header="Открыть" Command="{Binding OpenFileCommand}" />
                 </MenuItem>
+                <MenuItem Header="Правка">
+                    <MenuItem Header="Отменить" Click="EditMenu_Cancel" />
+                    <MenuItem Header="Вставить" Click="EditMenu_Paste"/>
+                    <MenuItem Header="Скопировать исходный текст" Click="EditMenu_CopyInputText"/>
+                    <MenuItem Header="Скопировать конечный текст" Click="EditMenu_CopyOutputText" />
+                </MenuItem>
             </Menu>
 
 
@@ -121,6 +127,7 @@
                              Foreground="#424242"
                              Grid.Column="2"
                              x:Name="OutputTextBox" 
+                             IsReadOnly="True"
                              TextWrapping="Wrap"
                              AcceptsReturn="True"
                              VerticalScrollBarVisibility="Visible"

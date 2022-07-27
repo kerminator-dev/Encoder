@@ -206,8 +206,14 @@ namespace Encoder.ViewModels
             _converter = new EncodingConverter();
         }
 
-        #region Методы
+        #region Методы для команд
 
+
+
+        /// <summary>
+        /// Открыть содержимое файла, для метода Execute() команды OpenFileCommand
+        /// </summary>
+        /// <param name="parameter"></param>
         private void OpenFileCommand_Execute(object parameter)
         {
             try
@@ -227,7 +233,7 @@ namespace Encoder.ViewModels
         }
 
         /// <summary>
-        /// Поменять текст местами, для метода Execute() комманды TupleCommand
+        /// Поменять текст местами, для метода Execute() команды TupleCommand
         /// </summary>
         /// <param name="parameter">Параметр комманды</param>
         private void TupleCommand_Execute(object parameter)
