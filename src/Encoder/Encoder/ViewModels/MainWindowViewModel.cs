@@ -1,6 +1,9 @@
 ﻿using Encoder.Commands;
 using Encoder.Converters;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -176,6 +179,19 @@ namespace Encoder.ViewModels
             }
         }
 
+        private CommandBase _opernFileCommand;
+        public CommandBase OpenFileCommand
+        {
+            get
+            {
+                return _opernFileCommand ?? (_opernFileCommand =
+                    new RelayCommand
+                    (
+                        execute: OpenFileCommand_Execute
+                    ));
+            }
+        }
+
         #endregion // Комманды
 
         #endregion // Поля и Свойства
@@ -191,6 +207,24 @@ namespace Encoder.ViewModels
         }
 
         #region Методы
+
+        private void OpenFileCommand_Execute(object parameter)
+        {
+            try
+            {
+                OpenFileDialog openfileDialog = new OpenFileDialog();
+                openfileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|XML Файлы (*.xml)|*.xml|Все файлы (*.*)|*.*";
+
+                if (openfileDialog.ShowDialog() == true)
+                {
+                    InputText = File.ReadAllText(openfileDialog.FileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessages = new List<string>() { ex.Message };
+            }
+        }
 
         /// <summary>
         /// Поменять текст местами, для метода Execute() комманды TupleCommand

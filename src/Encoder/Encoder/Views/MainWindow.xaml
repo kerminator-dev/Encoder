@@ -9,8 +9,21 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
-    <Border Padding="20 10 20 20">
+    <Border>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Menu Grid.Row="0" DockPanel.Dock="Top">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Открыть" Command="{Binding OpenFileCommand}" />
+                </MenuItem>
+            </Menu>
+
+
+            <Grid Grid.Row="1" Margin="20 10 20 20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -129,6 +142,7 @@
                         Foreground="Red"
                         VerticalAlignment="Stretch"/>
                 </DockPanel>
+        </Grid>
         </Grid>
     </Border>
 </Window>
