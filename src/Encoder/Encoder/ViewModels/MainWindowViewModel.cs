@@ -179,12 +179,17 @@ namespace Encoder.ViewModels
             }
         }
 
-        private CommandBase _opernFileCommand;
+        // Открыть файл
+        private CommandBase _openFileCommand;
+
+        /// <summary>
+        /// Открыть файл
+        /// </summary>
         public CommandBase OpenFileCommand
         {
             get
             {
-                return _opernFileCommand ?? (_opernFileCommand =
+                return _openFileCommand ?? (_openFileCommand =
                     new RelayCommand
                     (
                         execute: OpenFileCommand_Execute
