@@ -139,8 +139,8 @@ namespace Encoder.ViewModels
                 return _convertCommand ?? (_convertCommand =
                     new RelayCommand
                     (
-                        execute: (p) => ConvertText(p),
-                        canExecute: (p) => CanConvert(p)
+                        execute: (p) => ConvertCommand_Execute(p),
+                        canExecute: (p) => ConvertCommand_CanExecute(p)
                     ));
             }
         }
@@ -154,7 +154,7 @@ namespace Encoder.ViewModels
                 return _tupleCommand ?? (_tupleCommand =
                     new RelayCommand
                     (
-                        execute: (p) => TupleText(p)
+                        execute: (p) => TupleCommand_Execute(p)
                     ));
             }
         }
@@ -197,7 +197,7 @@ namespace Encoder.ViewModels
         /// Поменять текст местами, для метода Execute() комманды TupleCommand
         /// </summary>
         /// <param name="parameter">Параметр комманды</param>
-        private void TupleText(object parameter)
+        private void TupleCommand_Execute(object parameter)
         {
             string inputText = this.InputText;
             string outputText = this.OutputText;
@@ -216,7 +216,7 @@ namespace Encoder.ViewModels
         /// </summary>
         /// <param name="parameter">Параметр комманды</param>
         /// <returns></returns>
-        private bool CanConvert(object parameter)
+        private bool ConvertCommand_CanExecute(object parameter)
         {
             if (!string.IsNullOrEmpty(SelectedSourceEncodingName) && !string.IsNullOrEmpty(SelectedDestinationEncodingName))
             {
@@ -230,7 +230,7 @@ namespace Encoder.ViewModels
         /// Конвертировать текст, для метода Execute() комманды ConvertCommand
         /// </summary>
         /// <param name="parameter"></param>
-        private void ConvertText(object parameter)
+        private void ConvertCommand_Execute(object parameter)
         {
             var result = _converter.Convert
             (
