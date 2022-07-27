@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Encoder" xmlns:viewmodels="clr-namespace:Encoder.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="Смена кодировки" MinHeight="350" MinWidth="620" Width="620" Height="350">
+        Title="Декодер" MinHeight="350" MinWidth="620" Width="620" Height="350">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
