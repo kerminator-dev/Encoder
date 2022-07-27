@@ -139,8 +139,7 @@ namespace Encoder.ViewModels
                 return _convertCommand ?? (_convertCommand =
                     new RelayCommand
                     (
-                        execute: (p) => ConvertCommand_Execute(p),
-                        canExecute: (p) => ConvertCommand_CanExecute(p)
+                        execute: (p) => ConvertCommand_Execute(p)
                     ));
             }
         }
@@ -209,21 +208,6 @@ namespace Encoder.ViewModels
 
             this.SelectedSourceEncodingName = selectedEncodingDestination;
             this.SelectedDestinationEncodingName = selectedEncodingSource;
-        }
-
-        /// <summary>
-        /// Возможно ли произвести конвертациб, для метода CanExecute() команды ConvertCommand
-        /// </summary>
-        /// <param name="parameter">Параметр комманды</param>
-        /// <returns></returns>
-        private bool ConvertCommand_CanExecute(object parameter)
-        {
-            if (!string.IsNullOrEmpty(SelectedSourceEncodingName) && !string.IsNullOrEmpty(SelectedDestinationEncodingName))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
