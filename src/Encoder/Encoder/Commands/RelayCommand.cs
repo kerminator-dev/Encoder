@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Encoder.Commands
+namespace EncodingLibrary.Commands
 {
     public class RelayCommand : CommandBase
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Encoder.Converters
+namespace EncodingLibrary
 {
     /// <summary>
-    /// Результат выполнения конвертации
+    /// Результат выполнения
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ConvertionResult<T>
+    public abstract class ResutOf<T>
     {
         /// <summary>
         /// Результат выполнения
@@ -29,7 +29,7 @@ namespace Encoder.Converters
         /// </summary>
         public bool HasExceptions => Exceptions.Count > 0;
 
-        public ConvertionResult(T result, bool isSuccess, IReadOnlyList<Exception> exceptions)
+        public ResutOf(T result, bool isSuccess, IReadOnlyList<Exception> exceptions)
         {
             Result = result;
             IsSuccess = isSuccess;

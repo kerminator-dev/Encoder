@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Encoder.Views
+namespace EncodingLibrary.Views
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

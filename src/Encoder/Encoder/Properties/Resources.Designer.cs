@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Encoder.Properties {
+namespace EncodingLibrary.Properties {
     using System;
     
     

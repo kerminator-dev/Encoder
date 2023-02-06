@@ -58,3 +58,5 @@ C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Rele
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Release\System.Drawing.Common.xml
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Release\Wpf.Ui.xml
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\obj\Release\Encoder.csproj.CopyComplete
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Release\EncodingLibrary.dll
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Release\EncodingLibrary.pdb

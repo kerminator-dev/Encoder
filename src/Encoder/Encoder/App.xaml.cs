@@ -1,8 +1,8 @@
-﻿using Encoder.ViewModels;
-using Encoder.Views;
+﻿using EncodingLibrary.ViewModels;
+using EncodingLibrary.Views;
 using System.Windows;
 
-namespace Encoder
+namespace EncodingLibrary
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml

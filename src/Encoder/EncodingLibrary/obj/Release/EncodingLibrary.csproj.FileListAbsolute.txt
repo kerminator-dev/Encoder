@@ -1,0 +1,6 @@
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\bin\Release\EncodingLibrary.dll
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\bin\Release\EncodingLibrary.pdb
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Release\EncodingLibrary.csproj.AssemblyReference.cache
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Release\EncodingLibrary.csproj.CoreCompileInputs.cache
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Release\EncodingLibrary.dll
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Release\EncodingLibrary.pdb

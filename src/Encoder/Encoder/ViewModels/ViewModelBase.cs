@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Encoder.ViewModels
+namespace EncodingLibrary.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -79,3 +79,6 @@ C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Debu
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Debug\System.Drawing.Common.xml
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Debug\Wpf.Ui.xml
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\obj\Debug\Encoder.csproj.CopyComplete
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Debug\EncodingLibrary.dll
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Debug\EncodingLibrary.pdb
+C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\obj\Debug\Encoder.csproj.AssemblyReference.cache

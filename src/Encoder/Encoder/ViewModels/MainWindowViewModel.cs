@@ -1,5 +1,6 @@
-﻿using Encoder.Commands;
-using Encoder.Converters;
+﻿using EncodingLibrary.Commands;
+using EncodingLibrary.Converters;
+using EncodingLibrary.Extensions;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Encoder.ViewModels
+namespace EncodingLibrary.ViewModels
 {
     /// <summary>
     /// ViewModel для MainWindow
@@ -18,8 +19,6 @@ namespace Encoder.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         #region Поля и Свойства
-
-        private readonly EncodingConverter _converter;
 
         // Выбранная кодировка из выпадающего списка
         private string _selectedInputEncodingName;
@@ -217,7 +216,6 @@ namespace Encoder.ViewModels
             _inputText = string.Empty;
             _outputText = string.Empty;
             _errorMessages = new ObservableCollection<string>();
-            _converter = new EncodingConverter();
             AllEncodingNames = Encoding.GetEncodings().Select(e => e.Name).ToList();
 
             ErrorMessages.CollectionChanged += ErrorMessages_CollectionChanged;
@@ -279,28 +277,20 @@ namespace Encoder.ViewModels
         /// <param name="parameter"></param>
         private async Task ConvertCommand_Execute(object parameter)
         {
-            var result = _converter.Convert
-            (
-                sourceText: InputText,
-                sourceEncodingName: SelectedInputEncodingName,
-                destinationEncodingName: SelectedOutputEncodingName
-            );
-
-
-            ErrorMessages?.Clear();
-
-            if (result.IsSuccess)
+            try
             {
-                OutputText = result.Result;
+                OutputText = InputText.ChangeEncoding(
+                    sourceEncodingName: SelectedInputEncodingName,
+                    destinationEncodingName: SelectedOutputEncodingName
+                );
             }
-            else if (result.HasExceptions)
+            catch (Exception ex)
             {
-                foreach (var exception in result.Exceptions)
-                {
-                    ErrorMessages?.Add(exception.Message);
+                ErrorMessages?.Clear();
 
-                    await Task.Delay(200);
-                }
+                ErrorMessages?.Add(ex.Message);
+
+                await Task.Delay(200);
             }
         }
 

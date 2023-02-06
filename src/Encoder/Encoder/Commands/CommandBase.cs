@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Encoder.Commands
+namespace EncodingLibrary.Commands
 {
     public abstract class CommandBase : ICommand
     {

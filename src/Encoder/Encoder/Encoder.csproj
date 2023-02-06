@@ -67,9 +67,6 @@
     </ApplicationDefinition>
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Converters\ConvertResult.cs" />
-    <Compile Include="Converters\EncodingConverter.cs" />
-    <Compile Include="Converters\IConvertible.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="Views\MainWindow.xaml">
@@ -112,9 +109,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\application-icon.png" />
   </ItemGroup>
@@ -123,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="application-icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EncodingLibrary\EncodingLibrary.csproj">
+      <Project>{3d46df21-ed68-4149-82b5-301dcae66a66}</Project>
+      <Name>EncodingLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
