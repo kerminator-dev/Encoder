@@ -3,9 +3,12 @@ using Encoder.Converters;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Encoder.ViewModels
 {
@@ -19,19 +22,19 @@ namespace Encoder.ViewModels
         private readonly EncodingConverter _converter;
 
         // Выбранная кодировка из выпадающего списка
-        private string _selectedSourceEncodingName;
+        private string _selectedInputEncodingName;
 
         /// <summary>
         /// Выбранная кодировка из выпадающего списка слева
         /// </summary>
-        public string SelectedSourceEncodingName
+        public string SelectedInputEncodingName
         {
-            get => _selectedSourceEncodingName;
+            get => _selectedInputEncodingName;
             set
             {
-                _selectedSourceEncodingName = value;
+                _selectedInputEncodingName = value;
 
-                OnPropertyChanged(nameof(SelectedSourceEncodingName));
+                OnPropertyChanged(nameof(SelectedInputEncodingName));
                 ConvertCommand.OnCanExecuteChanged();
             }
         }
@@ -43,19 +46,19 @@ namespace Encoder.ViewModels
         public IEnumerable<string> EncodingListOutput => AllEncodingNames;
 
         // Выбранная кодировка из выпадающего списка
-        private string _selectedDestinationEncodingName;
+        private string _selectedOutputEncodingName;
 
         /// <summary>
         /// Выбранная кодировка из выпадающего списка справа
         /// </summary>
-        public string SelectedDestinationEncodingName
+        public string SelectedOutputEncodingName
         {
-            get => _selectedDestinationEncodingName;
+            get => _selectedOutputEncodingName;
             set
             {
-                _selectedDestinationEncodingName = value;
+                _selectedOutputEncodingName = value;
 
-                OnPropertyChanged(nameof(SelectedDestinationEncodingName));
+                OnPropertyChanged(nameof(SelectedOutputEncodingName));
                 ConvertCommand.OnCanExecuteChanged();
             }
         }
@@ -95,12 +98,12 @@ namespace Encoder.ViewModels
         }
 
         // Список сообщений с ошибками
-        private List<string> _errorMessages;
+        private ObservableCollection<string> _errorMessages;
 
         /// <summary>
         /// Список сообщений с ошибками
         /// </summary>
-        public List<string> ErrorMessages
+        public ObservableCollection<string> ErrorMessages
         {
             get => _errorMessages;
             set
@@ -117,15 +120,7 @@ namespace Encoder.ViewModels
         /// </summary>
         public bool HasErrors => ErrorMessages.Count > 0;
 
-        /// <summary>
-        /// Список всех кодировок
-        /// </summary>
-        public IEnumerable<string> AllEncodingNames => Encoding.GetEncodings().Select(e => e.Name);
-
-        /// <summary>
-        /// Список всех кодировок для выпадающего списка слева
-        /// </summary>
-        public IEnumerable<string> EncodingListInput => AllEncodingNames;
+        public IEnumerable<string> AllEncodingNames { get; }
 
         #region Комманды
 
@@ -142,8 +137,22 @@ namespace Encoder.ViewModels
                 return _convertCommand ?? (_convertCommand =
                     new RelayCommand
                     (
-                        execute: (p) => ConvertCommand_Execute(p)
+                        execute: async (p) => await ConvertCommand_Execute(p)
                     ));
+            }
+        }
+
+        private CommandBase _tupleEncodingsCommand;
+
+        public CommandBase TupleEncodingsCommand
+        {
+            get
+            {
+                return _tupleEncodingsCommand ?? (_tupleEncodingsCommand =
+                   new RelayCommand
+                   (
+                       execute: (p) => TupleEncodingsCommand_Execute(p)
+                   ));
             }
         }
 
@@ -156,7 +165,7 @@ namespace Encoder.ViewModels
                 return _tupleCommand ?? (_tupleCommand =
                     new RelayCommand
                     (
-                        execute: (p) => TupleCommand_Execute(p)
+                        execute: (p) => TupleTextCommand_Execute(p)
                     ));
             }
         }
@@ -203,12 +212,21 @@ namespace Encoder.ViewModels
 
         public MainWindowViewModel()
         {
-            _selectedSourceEncodingName = string.Empty;
-            _selectedDestinationEncodingName = string.Empty;
+            _selectedInputEncodingName = string.Empty;
+            _selectedOutputEncodingName = string.Empty;
             _inputText = string.Empty;
             _outputText = string.Empty;
-            _errorMessages = new List<string>();
+            _errorMessages = new ObservableCollection<string>();
             _converter = new EncodingConverter();
+            AllEncodingNames = Encoding.GetEncodings().Select(e => e.Name).ToList();
+
+            ErrorMessages.CollectionChanged += ErrorMessages_CollectionChanged;
+        }
+
+        private void ErrorMessages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(HasErrors));
+            OnPropertyChanged(nameof(ErrorMessages));
         }
 
         #region Методы для команд
@@ -224,7 +242,7 @@ namespace Encoder.ViewModels
             try
             {
                 OpenFileDialog openfileDialog = new OpenFileDialog();
-                openfileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|XML Файлы (*.xml)|*.xml|Все файлы (*.*)|*.*";
+                openfileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|xml Файлы (*.xml)|*.xml|Все файлы (*.*)|*.*";
 
                 if (openfileDialog.ShowDialog() == true)
                 {
@@ -233,7 +251,7 @@ namespace Encoder.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorMessages = new List<string>() { ex.Message };
+                ErrorMessages.Add(ex.Message);
             }
         }
 
@@ -241,47 +259,48 @@ namespace Encoder.ViewModels
         /// Поменять текст местами, для метода Execute() команды TupleCommand
         /// </summary>
         /// <param name="parameter">Параметр комманды</param>
-        private void TupleCommand_Execute(object parameter)
+        private void TupleTextCommand_Execute(object parameter)
+        { 
+            var temp = this.InputText;
+            this.InputText = this.OutputText;
+            this.OutputText = temp;
+        }
+
+        private void TupleEncodingsCommand_Execute(object parameter)
         {
-            string inputText = this.InputText;
-            string outputText = this.OutputText;
-            string selectedEncodingSource = this.SelectedSourceEncodingName;
-            string selectedEncodingDestination = this.SelectedDestinationEncodingName;
-
-            this.InputText = outputText;
-            this.OutputText = inputText;
-
-            this.SelectedSourceEncodingName = selectedEncodingDestination;
-            this.SelectedDestinationEncodingName = selectedEncodingSource;
+            var temp = String.IsNullOrEmpty(this.SelectedInputEncodingName) ? null : this.SelectedInputEncodingName;
+            this.SelectedInputEncodingName = String.IsNullOrEmpty(this.SelectedOutputEncodingName) ? null : this.SelectedOutputEncodingName;
+            this.SelectedOutputEncodingName = temp;
         }
 
         /// <summary>
         /// Конвертировать текст, для метода Execute() комманды ConvertCommand
         /// </summary>
         /// <param name="parameter"></param>
-        private void ConvertCommand_Execute(object parameter)
+        private async Task ConvertCommand_Execute(object parameter)
         {
             var result = _converter.Convert
             (
                 sourceText: InputText,
-                sourceEncodingName: SelectedSourceEncodingName,
-                destinationEncodingName: SelectedDestinationEncodingName
+                sourceEncodingName: SelectedInputEncodingName,
+                destinationEncodingName: SelectedOutputEncodingName
             );
+
+
+            ErrorMessages?.Clear();
 
             if (result.IsSuccess)
             {
                 OutputText = result.Result;
-
-                ErrorMessages = new List<string>();
             }
             else if (result.HasExceptions)
             {
-                var errorMessages = new List<string>();
-
                 foreach (var exception in result.Exceptions)
-                    errorMessages.Add(exception.Message);
+                {
+                    ErrorMessages?.Add(exception.Message);
 
-                ErrorMessages = errorMessages;
+                    await Task.Delay(200);
+                }
             }
         }
 
