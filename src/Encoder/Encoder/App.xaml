@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:EncodingLibrary"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <Application.Resources>
+        
+
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Unknown" />
@@ -45,6 +48,10 @@
                 </Setter>
 
             </Style>
+            
+            <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+            
         </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

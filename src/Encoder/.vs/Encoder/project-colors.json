@@ -15,7 +15,17 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Прочие файлы",
       "ColorIndex": -1
+    },
+    "3d46df21-ed68-4149-82b5-301dcae66a66": {
+      "ProjectGuid": "3d46df21-ed68-4149-82b5-301dcae66a66",
+      "DisplayName": "EncodingLibrary",
+      "ColorIndex": 2
+    },
+    "d79bcbb7-813e-4089-9cc2-fb06fba98e46": {
+      "ProjectGuid": "d79bcbb7-813e-4089-9cc2-fb06fba98e46",
+      "DisplayName": "EncodingLibraryUnitTestProject",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 4
 }
