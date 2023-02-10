@@ -1,4 +1,6 @@
-﻿using EncodingLibrary.ViewModels;
+﻿using Encoder.Interfaces;
+using EncodingLibrary;
+using EncodingLibrary.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Encoder.ViewModels
 {
-    public class SelectEncodingWindowViewModel : ViewModelBase
+    public class SelectEncodingWindowViewModel : ViewModelBase, IResultOf<string>
     {
         public IEnumerable<string> Encodings { get; private set; }
 
@@ -32,6 +34,11 @@ namespace Encoder.ViewModels
         {
             Encodings = encodings;
             SelectedEncoding = Encodings.FirstOrDefault();
+        }
+
+        public string GetResult()
+        {
+            return SelectedEncoding;
         }
     }
 }

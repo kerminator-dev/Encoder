@@ -1,4 +1,5 @@
-﻿using Encoder.ViewModels;
+﻿using Encoder.Services;
+using Encoder.ViewModels;
 using Encoder.Views;
 using EncodingLibrary.Commands;
 using EncodingLibrary.Converters;
@@ -21,6 +22,8 @@ namespace EncodingLibrary.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         #region Поля и Свойства
+
+        private IDialogService _dialogService;
 
         // Выбранная кодировка из выпадающего списка
         private string _selectedInputEncodingName;
@@ -239,8 +242,9 @@ namespace EncodingLibrary.ViewModels
 
         #endregion // Поля и Свойства
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
             _selectedInputEncodingName = string.Empty;
             _selectedOutputEncodingName = string.Empty;
             _inputText = string.Empty;
@@ -266,7 +270,6 @@ namespace EncodingLibrary.ViewModels
                 return;
             }
 
-
             var encodings = InputText.DetectEncodings().Select(e => e.HeaderName).ToList();
 
             if (encodings == null || encodings.Count == 0)
@@ -279,20 +282,21 @@ namespace EncodingLibrary.ViewModels
             if (encodings.Count == 1)
             {
                 SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == encodings.First());
+
+                return;
             }
 
-            var selectEncodingWindow = new SelectEncodingWindow();
-            var viewModel = new SelectEncodingWindowViewModel(encodings);
-            selectEncodingWindow.DataContext = viewModel; 
-
-            if ((bool)selectEncodingWindow.ShowDialog())
-            {
-                SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == viewModel.SelectedEncoding);
-            }
-
-
-
-            return;
+            _ = _dialogService.ShowDialog<SelectEncodingWindow, SelectEncodingWindowViewModel, string>
+            (
+                onCloseCallback: delegate(string selectedEncoding)
+                {
+                    if (!string.IsNullOrEmpty(selectedEncoding))
+                    {
+                        this.SelectedInputEncodingName = selectedEncoding;
+                    }
+                },
+                ViewModelparameters: encodings
+            );
         }
 
 

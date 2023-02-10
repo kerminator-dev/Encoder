@@ -1,4 +1,6 @@
-﻿using EncodingLibrary.ViewModels;
+﻿using Encoder.Interfaces;
+using EncodingLibrary;
+using EncodingLibrary.ViewModels;
 using System;
 using System.Security.Cryptography;
 using System.Windows;
@@ -8,12 +10,22 @@ namespace Encoder.Services
 {
     internal class DialogService : IDialogService
     {
-        public bool? ShowDialog<TView, TViewModel>(params object[] parameters)
+        public bool? ShowDialog<TView, TViewModel, TResult>(Action<TResult> onCloseCallback, params object[] ViewModelparameters)
             where TView : Window
-            where TViewModel : ViewModelBase
+            where TViewModel : ViewModelBase, IResultOf<TResult>
         {
             TView view = Activator.CreateInstance<TView>();
-            var viewModel = Activator.CreateInstance(typeof(TViewModel), parameters);
+            var viewModel = Activator.CreateInstance(typeof(TViewModel), ViewModelparameters);
+
+            EventHandler closeEventHandler = default;
+            closeEventHandler += (o, e) =>
+            {
+                onCloseCallback((viewModel as IResultOf<TResult>).GetResult());
+
+                view.Closed -= closeEventHandler;
+            };
+
+            view.Closed += closeEventHandler;
 
             view.DataContext = viewModel;
 

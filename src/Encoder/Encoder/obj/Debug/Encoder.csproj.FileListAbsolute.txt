@@ -108,3 +108,13 @@ C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Debug\Encode
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Debug\Encoder.pdb
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Debug\Views\SelectEncodingWindow.g.cs
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Debug\Views\SelectEncodingWindow.baml
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Debug\System.Threading.Tasks.Extensions.xml

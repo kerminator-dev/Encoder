@@ -1,5 +1,8 @@
-﻿using EncodingLibrary.ViewModels;
+﻿using Encoder.Services;
+using EncodingLibrary.ViewModels;
 using EncodingLibrary.Views;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Windows;
 
 namespace EncodingLibrary
@@ -9,12 +12,26 @@ namespace EncodingLibrary
     /// </summary>
     public partial class App : Application
     {
+        private ServiceProvider serviceProvider;
+
+        public App()
+        {
+            ServiceCollection services = new ServiceCollection();
+            ConfigureServices(services);
+            serviceProvider = services.BuildServiceProvider();
+        }
+
+        protected void ConfigureServices(ServiceCollection services)
+        {
+            services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<MainWindow>();
+            services.AddSingleton<MainWindowViewModel>();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel()
-            };
+            MainWindow = serviceProvider.GetService<MainWindow>();
+            MainWindow.DataContext = serviceProvider.GetService<MainWindowViewModel>();
             MainWindow.Show();
 
             base.OnStartup(e);
