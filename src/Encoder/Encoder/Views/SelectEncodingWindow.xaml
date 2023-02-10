@@ -1,0 +1,88 @@
+﻿<Window x:Class="Encoder.Views.SelectEncodingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Encoder.Views"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:viewmodels="clr-namespace:Encoder.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:SelectEncodingWindowViewModel}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        MaxHeight="450" MaxWidth="300"
+        Background="#FFEFEFEF"
+        ResizeMode="NoResize"
+        Title="SelectEncodingWindow" MinHeight="400" MinWidth="300">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        
+        <Style TargetType="ui:Button" x:Key="ConfirmButton">
+            <Setter Property="Background" Value="#80b9ee" />
+            <Setter Property="Foreground" Value="White" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="15 5 15 15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Выберите кодировку:" FontSize="13" Grid.Row="0" Grid.ColumnSpan="2" Foreground="Gray"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="11" Text="Определено подходящих кодировок:"  Foreground="DarkGray" Margin="0 0 5 0" />
+            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="11" Text="{Binding Encodings.Count}" Foreground="DarkGray" />
+
+            
+        </Grid>
+
+
+
+
+        <ListBox Margin="0 0 0 0" 
+                 Grid.Row="1" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                 HorizontalAlignment="Stretch" 
+                 ItemsSource="{Binding Encodings, Mode=OneTime}" 
+                 SelectedItem="{Binding SelectedEncoding, Mode=TwoWay}" 
+                 VerticalAlignment="Stretch" 
+                 IsEnabled="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                 />
+
+
+
+        <StackPanel Margin="0 10 0 0" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
+
+
+            <ui:Button x:Name="CancelButton" 
+                       Foreground="DarkGray"  
+                       Content="ГАЛЯ ОТМЕНА" 
+                       Margin="0 0 10 0"
+                       Click="CancelButton_Click" 
+                       Cursor="Hand"/>
+
+            <ui:Button x:Name="SelectButton"
+                    Content="Выбрать" 
+                    Style="{StaticResource ConfirmButton}"
+                    Background="#80b9ee" 
+                    Foreground="White"
+                    Click="SelectButton_Click" 
+                    Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Window>

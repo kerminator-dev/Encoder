@@ -1,4 +1,6 @@
-﻿using EncodingLibrary.Commands;
+﻿using Encoder.ViewModels;
+using Encoder.Views;
+using EncodingLibrary.Commands;
 using EncodingLibrary.Converters;
 using EncodingLibrary.Extensions;
 using Microsoft.Win32;
@@ -119,7 +121,20 @@ namespace EncodingLibrary.ViewModels
         /// </summary>
         public bool HasErrors => ErrorMessages.Count > 0;
 
-        public IEnumerable<string> AllEncodingNames { get; }
+        private string[] _allEncodingNames;
+        public string[] AllEncodingNames
+        {
+            get
+            {
+                return _allEncodingNames ??
+                (
+                    _allEncodingNames = Encoding.GetEncodings()
+                                                .OrderByDescending(e => e.Name)
+                                                .Select(e => e.Name)
+                                                .ToArray()
+                );
+            }
+        }
 
         #region Комманды
 
@@ -169,7 +184,6 @@ namespace EncodingLibrary.ViewModels
             }
         }
 
-        // Очистить поля
         private CommandBase _clearFieldsCommand;
 
         /// <summary>
@@ -187,7 +201,6 @@ namespace EncodingLibrary.ViewModels
             }
         }
 
-        // Открыть файл
         private CommandBase _openFileCommand;
 
         /// <summary>
@@ -205,6 +218,23 @@ namespace EncodingLibrary.ViewModels
             }
         }
 
+        private CommandBase _detectInputEncodingCommand;
+
+        /// <summary>
+        /// Определить исходную кодировку текста
+        /// </summary>
+        public CommandBase DetectInputEncodingCommand
+        {
+            get
+            {
+                return _detectInputEncodingCommand ?? (_detectInputEncodingCommand =
+                    new RelayCommand
+                    (
+                        execute: DetectInputEncodingCommand_Execute
+                    ));
+            }
+        }
+
         #endregion // Комманды
 
         #endregion // Поля и Свойства
@@ -216,7 +246,6 @@ namespace EncodingLibrary.ViewModels
             _inputText = string.Empty;
             _outputText = string.Empty;
             _errorMessages = new ObservableCollection<string>();
-            AllEncodingNames = Encoding.GetEncodings().Select(e => e.Name).ToList();
 
             ErrorMessages.CollectionChanged += ErrorMessages_CollectionChanged;
         }
@@ -229,12 +258,44 @@ namespace EncodingLibrary.ViewModels
 
         #region Методы для команд
 
+        private void DetectInputEncodingCommand_Execute(object parameter)
+        {
+            if (String.IsNullOrEmpty(InputText))
+            {
+                ErrorMessages?.Add("Необходимо указать текст для определения кодировки!");
+                return;
+            }
 
 
-        /// <summary>
-        /// Открыть содержимое файла, для метода Execute() команды OpenFileCommand
-        /// </summary>
-        /// <param name="parameter"></param>
+            var encodings = InputText.DetectEncodings().Select(e => e.HeaderName).ToList();
+
+            if (encodings == null || encodings.Count == 0)
+            {
+                ErrorMessages?.Add("Для текста не удалось определить подходящие кодировки!");
+
+                return;
+            }
+
+            if (encodings.Count == 1)
+            {
+                SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == encodings.First());
+            }
+
+            var selectEncodingWindow = new SelectEncodingWindow();
+            var viewModel = new SelectEncodingWindowViewModel(encodings);
+            selectEncodingWindow.DataContext = viewModel; 
+
+            if ((bool)selectEncodingWindow.ShowDialog())
+            {
+                SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == viewModel.SelectedEncoding);
+            }
+
+
+
+            return;
+        }
+
+
         private void OpenFileCommand_Execute(object parameter)
         {
             try
@@ -249,7 +310,7 @@ namespace EncodingLibrary.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorMessages.Add(ex.Message);
+                ErrorMessages?.Add(ex.Message);
             }
         }
 
@@ -269,6 +330,7 @@ namespace EncodingLibrary.ViewModels
             var temp = String.IsNullOrEmpty(this.SelectedInputEncodingName) ? null : this.SelectedInputEncodingName;
             this.SelectedInputEncodingName = String.IsNullOrEmpty(this.SelectedOutputEncodingName) ? null : this.SelectedOutputEncodingName;
             this.SelectedOutputEncodingName = temp;
+
         }
 
         /// <summary>

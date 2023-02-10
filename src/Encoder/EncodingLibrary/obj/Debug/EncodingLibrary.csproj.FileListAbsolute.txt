@@ -4,3 +4,9 @@ C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.dll
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.pdb
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\EncodingLibrary\bin\Debug\EncodingLibrary.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\EncodingLibrary\bin\Debug\EncodingLibrary.pdb
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.dll
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\EncodingLibrary\obj\Debug\EncodingLibrary.pdb
