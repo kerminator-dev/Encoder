@@ -3,6 +3,7 @@ using EncodingLibrary;
 using EncodingLibrary.ViewModels;
 using System;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Windows;
 using Wpf.Ui.Mvvm.Interfaces;
 
@@ -10,7 +11,7 @@ namespace Encoder.Services
 {
     internal class DialogService : IDialogService
     {
-        public bool? ShowDialog<TView, TViewModel, TResult>(Action<TResult> onCloseCallback, params object[] ViewModelparameters)
+        public bool? ShowDialog<TView, TViewModel, TResult>(Action<bool?, TResult> onCloseCallback, params object[] ViewModelparameters)
             where TView : Window
             where TViewModel : ViewModelBase, IResultOf<TResult>
         {
@@ -20,7 +21,7 @@ namespace Encoder.Services
             EventHandler closeEventHandler = default;
             closeEventHandler += (o, e) =>
             {
-                onCloseCallback((viewModel as IResultOf<TResult>).GetResult());
+                onCloseCallback(view.DialogResult, (viewModel as IResultOf<TResult>).GetResult());
 
                 view.Closed -= closeEventHandler;
             };
@@ -47,9 +48,7 @@ namespace Encoder.Services
         public bool? ShowDialog<TView>()
             where TView : Window
         {
-            TView view = Activator.CreateInstance<TView>();
-
-            return view.ShowDialog();
+            return Activator.CreateInstance<TView>().ShowDialog();
         }
     }
 }

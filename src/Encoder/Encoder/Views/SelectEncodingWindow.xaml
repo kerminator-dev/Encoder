@@ -10,20 +10,10 @@
         MaxHeight="450" MaxWidth="300"
         Background="#FFEFEFEF"
         ResizeMode="NoResize"
-        Title="SelectEncodingWindow" MinHeight="400" MinWidth="300">
+        Title="Select encoding" MinHeight="400" MinWidth="300">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        
-        <Style TargetType="ui:Button" x:Key="ConfirmButton">
-            <Setter Property="Background" Value="#80b9ee" />
-            <Setter Property="Foreground" Value="White" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="White" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </Window.Resources>
     
     <Grid Margin="15 5 15 15">
@@ -43,10 +33,20 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Выберите кодировку:" FontSize="13" Grid.Row="0" Grid.ColumnSpan="2" Foreground="Gray"/>
+            <TextBlock Text="Выберите кодировку" FontSize="13" Grid.Row="0" Grid.ColumnSpan="2" Foreground="Gray"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="11" Text="Определено подходящих кодировок:"  Foreground="DarkGray" Margin="0 0 5 0" />
-            <TextBlock Grid.Row="1" Grid.Column="1" FontSize="11" Text="{Binding Encodings.Count}" Foreground="DarkGray" />
+            <TextBlock Grid.Row="1" 
+                       Grid.Column="0" 
+                       FontSize="11" 
+                       Text="Определено подходящих кодировок:"  
+                       Foreground="DarkGray" 
+                       Margin="0 0 5 4" />
+            <TextBlock Grid.Row="1" 
+                       Grid.Column="1" 
+                       Margin="0 0 0 4"
+                       FontSize="11" 
+                       Text="{Binding Encodings.Count}" 
+                       Foreground="DarkGray" />
 
             
         </Grid>
@@ -77,12 +77,11 @@
                        Cursor="Hand"/>
 
             <ui:Button x:Name="SelectButton"
-                    Content="Выбрать" 
-                    Style="{StaticResource ConfirmButton}"
-                    Background="#80b9ee" 
-                    Foreground="White"
-                    Click="SelectButton_Click" 
-                    Cursor="Hand"/>
+                       Content="Выбрать" 
+                       Click="SelectButton_Click" 
+                       Style="{StaticResource ConfirmButton}"
+                       >
+            </ui:Button>
         </StackPanel>
     </Grid>
 </Window>

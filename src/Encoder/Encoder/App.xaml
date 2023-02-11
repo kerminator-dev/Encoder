@@ -13,12 +13,63 @@
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
 
+            <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}" x:Key="DefaultButton">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Style>
+
+            <Style TargetType="{x:Type ui:Button}" x:Key="ConfirmButton" BasedOn="{StaticResource DefaultButton}">
+                <Setter Property="Background" Value="#80b9ee"/>
+                <Setter Property="PressedForeground" Value="White"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="MouseOverBackground" Value="#80b9ee"/>
+                <Setter Property="PressedBackground" Value="#80b9ee"/>
+                <Setter Property="BorderBrush" Value="#80b9ee"/>
+                <Setter Property="MouseOverBorderBrush" Value="#80b9ee"/>
+                <Setter Property="PressedBorderBrush" Value="#80b9ee"/>
+            </Style>
+
+            <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource DefaultButton}" x:Key="SquareButton">
+                <Setter Property="Width" Value="40"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Height" Value="40"/>
+            </Style>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="HasDropShadow" Value="True" />
+                <Setter Property="Foreground" Value="Gray"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToolTip">
+                            <Border Name="Border" CornerRadius="6"
+                                    Background="White"
+                                    BorderThickness="1"
+                                    Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
+                                    Margin="4 4 4 8"
+                                    >
+                                <Border.Effect>
+                                    <DropShadowEffect x:Name="DropShadowEffect"
+                                          Color="#e4e5e6" 
+                                          BlurRadius="4" 
+                                          Direction="-90"
+                                          RenderingBias="Performance" 
+                                          ShadowDepth="2"/>
+                                </Border.Effect>
+                                <ContentPresenter Margin="8 6 8 6" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <Style TargetType="{x:Type ListBoxItem}" x:Key="ErrorListBoxItem">
 
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="SnapsToDevicePixels" Value="true"/>
                 <Setter Property="OverridesDefaultStyle" Value="true"/>
                 <Setter Property="Foreground" Value="#FFFF8181"/>
+                <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListBoxItem">
@@ -42,8 +93,12 @@
                                     </EventTrigger.Actions>
                                 </EventTrigger>
                             </ControlTemplate.Triggers>
-
                         </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <TranslateTransform/>
                     </Setter.Value>
                 </Setter>
 

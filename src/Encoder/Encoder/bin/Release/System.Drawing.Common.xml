@@ -31,7 +31,7 @@
         <member name="P:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute.Url">
             <summary>
             Gets or sets an optional URL that contains more information about the method,
-            why it requries unreferenced code, and what options a consumer has to deal with it.
+            why it requires unreferenced code, and what options a consumer has to deal with it.
             </summary>
         </member>
         <member name="T:System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute">
@@ -229,9 +229,6 @@
         <member name="P:System.SR.ColorNotSystemColor">
             <summary>The color {0} is not a system color.</summary>
         </member>
-        <member name="P:System.SR.DotNET_ComponentType">
-            <summary>.NET Component</summary>
-        </member>
         <member name="P:System.SR.GdiplusAborted">
             <summary>Function was ended.</summary>
         </member>
@@ -325,18 +322,6 @@
         <member name="P:System.SR.IconInvalidMaskLength">
             <summary>'{0}' data length expected {1}, read {2}</summary>
         </member>
-        <member name="P:System.SR.ToolboxItemLocked">
-            <summary>Toolbox item cannot be modified.</summary>
-        </member>
-        <member name="P:System.SR.ToolboxItemInvalidPropertyType">
-            <summary>Property {0} requires an argument of type {1}.</summary>
-        </member>
-        <member name="P:System.SR.ToolboxItemValueNotSerializable">
-            <summary>Data type {0} is not serializable. Items added to a property dictionary must be serializable.</summary>
-        </member>
-        <member name="P:System.SR.ToolboxItemInvalidKey">
-            <summary>Argument should be a non-empty string.</summary>
-        </member>
         <member name="P:System.SR.IllegalState">
             <summary>Internal state of the {0} class is invalid.</summary>
         </member>
@@ -370,9 +355,6 @@
         <member name="P:System.SR.InvalidBoundArgument">
             <summary>Value of '{1}' is not valid for '{0}'. '{0}' should be greater than {2} and less than or equal to {3}.</summary>
         </member>
-        <member name="P:System.SR.InvalidClassName">
-            <summary>Class name is not valid.</summary>
-        </member>
         <member name="P:System.SR.InvalidColor">
             <summary>Color '{0}' is not valid.</summary>
         </member>
@@ -390,9 +372,6 @@
         </member>
         <member name="P:System.SR.InvalidLowBoundArgumentEx">
             <summary>Value of '{1}' is not valid for '{0}'. '{0}' must be greater than or equal to {2}.</summary>
-        </member>
-        <member name="P:System.SR.InvalidPermissionLevel">
-            <summary>Permission level is not valid.</summary>
         </member>
         <member name="P:System.SR.InvalidPermissionState">
             <summary>Permission state is not valid.</summary>
@@ -451,20 +430,11 @@
         <member name="P:System.SR.PDOCqueryPageSettingsDescr">
             <summary>Occurs before each page is printed.  Useful for changing PageSettings for a particular page.</summary>
         </member>
-        <member name="P:System.SR.PlatformNotSupported_Drawing">
-            <summary>System.Drawing is not supported on this platform.</summary>
-        </member>
         <member name="P:System.SR.PlatformNotSupported_Unix">
             <summary>System.Drawing.Common is not supported on non-Windows platforms. See https://aka.ms/systemdrawingnonwindows for more information.</summary>
         </member>
         <member name="P:System.SR.PrintDocumentDesc">
             <summary>Defines an object that sends output to a printer.</summary>
-        </member>
-        <member name="P:System.SR.PrintingPermissionBadXml">
-            <summary>XML is not valid.</summary>
-        </member>
-        <member name="P:System.SR.PrintingPermissionAttributeInvalidPermissionLevel">
-            <summary>Permission level must be between PrintingPermissionLevel.NoPrinting and PrintingPermissionLevel.AllPrinting.</summary>
         </member>
         <member name="P:System.SR.PropertyValueInvalidEntry">
             <summary>IDictionary parameter contains at least one entry that is not valid. Ensure all values are consistent with the object's properties.</summary>
@@ -474,9 +444,6 @@
         </member>
         <member name="P:System.SR.ResourceNotFound">
             <summary>Resource '{1}' cannot be found in class '{0}'.</summary>
-        </member>
-        <member name="P:System.SR.TargetNotPrintingPermission">
-            <summary>Target does not have permission to print.</summary>
         </member>
         <member name="P:System.SR.TextParseFailedFormat">
             <summary>Text "{0}" cannot be parsed. The expected text format is "{1}".</summary>
@@ -507,12 +474,6 @@
         </member>
         <member name="P:System.SR.BlendObjectLastElementInvalid">
             <summary>Invalid Blend object. The positions array must have 1.0 as its last element.</summary>
-        </member>
-        <member name="P:System.SR.DllNotFoundExceptionMessage">
-            <summary>Unable to load DLL '{0}': The specified module could not be found.</summary>
-        </member>
-        <member name="P:System.SR.EntryPointNotFoundExceptionMessage">
-            <summary>Unable to find an entry point named '{0}' in DLL '{1}'.</summary>
         </member>
         <member name="P:System.SR.AvailableOnlyOnWMF">
             <summary>{0} only available on WMF files.</summary>
@@ -568,6 +529,77 @@
         <member name="P:System.SR.SystemDrawingCommon_PlatformNotSupported">
             <summary>System.Drawing.Common is not supported on this platform.</summary>
         </member>
+        <member name="T:System.Runtime.InteropServices.LibraryImportAttribute">
+            <summary>
+            Attribute used to indicate a source generator should create a function for marshalling
+            arguments instead of relying on the runtime to generate an equivalent marshalling function at run-time.
+            </summary>
+            <remarks>
+            This attribute is meaningless if the source generator associated with it is not enabled.
+            The current built-in source generator only supports C# and only supplies an implementation when
+            applied to static, partial, non-generic methods.
+            </remarks>
+        </member>
+        <member name="M:System.Runtime.InteropServices.LibraryImportAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Runtime.InteropServices.LibraryImportAttribute"/>.
+            </summary>
+            <param name="libraryName">Name of the library containing the import.</param>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.LibraryName">
+            <summary>
+            Gets the name of the library containing the import.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.EntryPoint">
+            <summary>
+            Gets or sets the name of the entry point to be called.
+            </summary>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshalling">
+            <summary>
+            Gets or sets how to marshal string arguments to the method.
+            </summary>
+            <remarks>
+            If this field is set to a value other than <see cref="F:System.Runtime.InteropServices.StringMarshalling.Custom" />,
+            <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType" /> must not be specified.
+            </remarks>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType">
+            <summary>
+            Gets or sets the <see cref="T:System.Type"/> used to control how string arguments to the method are marshalled.
+            </summary>
+            <remarks>
+            If this field is specified, <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshalling" /> must not be specified
+            or must be set to <see cref="F:System.Runtime.InteropServices.StringMarshalling.Custom" />.
+            </remarks>
+        </member>
+        <member name="P:System.Runtime.InteropServices.LibraryImportAttribute.SetLastError">
+            <summary>
+            Gets or sets whether the callee sets an error (SetLastError on Windows or errno
+            on other platforms) before returning from the attributed method.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.InteropServices.StringMarshalling">
+            <summary>
+            Specifies how strings should be marshalled for generated p/invokes
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Custom">
+            <summary>
+            Indicates the user is suppling a specific marshaller in <see cref="P:System.Runtime.InteropServices.LibraryImportAttribute.StringMarshallingCustomType"/>.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Utf8">
+            <summary>
+            Use the platform-provided UTF-8 marshaller.
+            </summary>
+        </member>
+        <member name="F:System.Runtime.InteropServices.StringMarshalling.Utf16">
+            <summary>
+            Use the platform-provided UTF-16 marshaller.
+            </summary>
+        </member>
         <member name="T:System.Runtime.Versioning.OSPlatformAttribute">
             <summary>
             Base type for all platform-specific API attributes.
@@ -597,6 +629,14 @@
             <remarks>
             Primarily used by OS bindings to indicate APIs that are only available in
             earlier versions.
+            </remarks>
+        </member>
+        <member name="T:System.Runtime.Versioning.ObsoletedOSPlatformAttribute">
+            <summary>
+            Marks APIs that were obsoleted in a given operating system version.
+            </summary>
+            <remarks>
+            Primarily used by OS bindings to indicate APIs that should not be used anymore.
             </remarks>
         </member>
         <member name="T:System.Runtime.Versioning.SupportedOSPlatformGuardAttribute">

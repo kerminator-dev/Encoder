@@ -33,7 +33,7 @@
                                     Storyboard.TargetProperty="Height"
                                 >
                         <DoubleAnimation.EasingFunction>
-                            <QuarticEase EasingMode="EaseInOut"/>
+                            <QuinticEase EasingMode="EaseOut"/>
                         </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
@@ -177,7 +177,7 @@
 
     <DockPanel>
         <Menu Opacity="1" d:Opacity="1" Name="HeaderMenu" FontFamily="Segoe UI" FontSize="12" Background="White" DockPanel.Dock="Top" Margin="0 0 0 10" FontWeight="Bold" >
-            <Menu.Effect>
+            <Menu.Effect >
                 <DropShadowEffect x:Name="DropShadowEffect"
                               Color="#e4e5e6" 
                               BlurRadius="10" 
@@ -224,19 +224,21 @@
 
 
             <ComboBox MinWidth="200"
+                      
                       Opacity="0"
                       d:Opacity="1"
                       Grid.Column="0"
                       ItemsSource="{Binding AllEncodingNames, Mode=OneTime}"
                       SelectedItem="{Binding SelectedInputEncodingName, Mode=TwoWay}"
                       Grid.Row="1"
-                      VerticalAlignment="Top"
+                      VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch"
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
                       Name="InputEncodingCombo"/>
 
 
-            <Button Grid.Column="1" Grid.Row="1"
+            <ui:Button Grid.Column="1" Grid.Row="1"
+                       Style="{StaticResource SquareButton}"
                     Name="InvertEncodingsButton"
                     Opacity="0"
                     Cursor="Hand"
@@ -257,7 +259,7 @@
                         d:Foreground="Gray"
                         Foreground="Transparent"/>
                 </Button.Content>
-            </Button>
+            </ui:Button>
 
 
             <TextBlock Grid.Row="0"
@@ -270,7 +272,7 @@
                        Name="OutputEncodingText"/>
 
             <ComboBox Grid.Row="1" Grid.Column="2" MinWidth="200"
-                      VerticalAlignment="Top"
+                      VerticalAlignment="Stretch"
                       ItemsSource="{Binding AllEncodingNames, Mode=OneTime}"
                       SelectedItem="{Binding SelectedOutputEncodingName, Mode=TwoWay}"
                       HorizontalAlignment="Stretch"
@@ -281,9 +283,10 @@
 
 
 
-            <TextBox Margin="0 10 0 0" Grid.Row="2" 
+            <ui:TextBox Margin="0 10 0 0" Grid.Row="2" 
                      Opacity="0"
                       d:Opacity="1"
+                         
                              Grid.Column="0"
                              Foreground="#424242"
                              x:Name="InputTextBox" 
@@ -292,11 +295,12 @@
                              AcceptsReturn="True"
                              VerticalScrollBarVisibility="Visible"
                              Text="{Binding InputText, Mode=TwoWay}">
-            </TextBox>
+            </ui:TextBox>
 
             <TextBox Margin="0 10 0 0" Grid.Row="2" 
                      Opacity="0"
                       d:Opacity="1"
+                     
                      
                              Foreground="#424242"
                              Grid.Column="2"
@@ -314,16 +318,14 @@
                                 Grid.Row="2"
                                 Orientation="Vertical"
                         Margin="5 10 5 0">
-                <Button Width="40"
-                        Height="40"
-                        Padding="0"
-                        Cursor="Hand"
+                <ui:Button 
+                        Style="{StaticResource SquareButton}"
                         Opacity="0"
                         d:Opacity="1"
                         Name="ConvertButton"
                         ToolTip="Изменить кодировку текста"
                         Command="{Binding ConvertCommand, UpdateSourceTrigger=PropertyChanged}">
-                    <Button.Content>
+                    <ui:Button.Content>
                         <ui:FontIcon
                             d:Foreground="Gray"
                             Name="ConvertFontIcon"
@@ -332,16 +334,13 @@
                             FontSize="16"
                             FontWeight="Bold"
                             Foreground="Transparent"/>
-                    </Button.Content>
-                </Button>
+                    </ui:Button.Content>
+                </ui:Button>
 
 
 
 
-                <Button Width="40"
-                        Height="40"
-                        Padding="0"
-                        Cursor="Hand"
+                <ui:Button Style="{StaticResource SquareButton}"
                         Opacity="0"
                         d:Opacity="1"
                         VerticalAlignment="Top"
@@ -359,22 +358,19 @@
                              FontWeight="Bold"
                              Foreground="Transparent"/>
                     </Button.Content>
-                </Button>
+                </ui:Button>
 
-                <Button x:Name="DetectInputEncodingButton"
+                <ui:Button x:Name="DetectInputEncodingButton"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        Padding="0"
-                        Grid.Column="0"
-                        Height="40"
                         Margin="0 5 0 0"
-                        Grid.Row="1"
                         Cursor="Hand"
                         Opacity="0"
+                        Style="{StaticResource SquareButton}"
                         d:Opacity="1"
                         Command="{Binding DetectInputEncodingCommand}"
                         ToolTip="Определить исходную кодировку">
-                    <Button.Content>
+                    <ui:Button.Content>
                         <ui:FontIcon
                             Name="DetectInputEncodingFontIcon"
                              Glyph="&#xf22c;"
@@ -383,13 +379,12 @@
                              FontWeight="Bold"
                              d:Foreground="Gray"
                              Foreground="#FF9F53CC"/>
-                    </Button.Content>
-                </Button>
+                    </ui:Button.Content>
+                </ui:Button>
 
-                <Button Cursor="Hand"
+                <ui:Button 
                         VerticalAlignment="Top"
-                        Width="40"
-                        Height="40"
+                        Style="{StaticResource SquareButton}"
                         Opacity="0"
                         d:Opacity="1"
                         Name="ClearFieldsButton"
@@ -398,7 +393,7 @@
                         Command="{Binding ClearFieldsCommand}"
                         ToolTip="Очистить поля"
                         >
-                        <Button.Content>
+                        <ui:Button.Content>
                         <ui:FontIcon
                             Name="ClearFieldsFontIcon"
                             d:Foreground="Gray"
@@ -407,8 +402,8 @@
                             FontSize="16"
                             FontWeight="Bold"
                             Foreground="Transparent"/>
-                    </Button.Content>
-                </Button>
+                    </ui:Button.Content>
+                </ui:Button>
             </StackPanel>
 
 
@@ -428,17 +423,8 @@
                          DockPanel.Dock="Top"
                          VerticalAlignment="Stretch"
                          ScrollViewer.CanContentScroll="True"
-                         Height="66">
-
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ErrorListBoxItem}">
-                            <Setter Property="RenderTransform">
-                                <Setter.Value>
-                                    <TranslateTransform/>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
+                         Height="66"
+                         ItemContainerStyle="{StaticResource ErrorListBoxItem}">
                 </ListBox>
             </DockPanel>
 

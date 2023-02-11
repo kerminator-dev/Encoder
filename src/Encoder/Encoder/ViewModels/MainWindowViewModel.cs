@@ -44,11 +44,6 @@ namespace EncodingLibrary.ViewModels
         }
 
 
-        /// <summary>
-        /// Список всех кодировок для выпадающего списка справа
-        /// </summary>
-        public IEnumerable<string> EncodingListOutput => AllEncodingNames;
-
         // Выбранная кодировка из выпадающего списка
         private string _selectedOutputEncodingName;
 
@@ -129,13 +124,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                return _allEncodingNames ??
-                (
+                if (_allEncodingNames == null)
+                {
                     _allEncodingNames = Encoding.GetEncodings()
                                                 .OrderByDescending(e => e.Name)
                                                 .Select(e => e.Name)
-                                                .ToArray()
-                );
+                                                .ToArray();
+                }
+
+                return _allEncodingNames;
             }
         }
 
@@ -238,7 +235,7 @@ namespace EncodingLibrary.ViewModels
             }
         }
 
-        #endregion // Комманды
+        #endregion // Команды
 
         #endregion // Поля и Свойства
 
@@ -264,40 +261,47 @@ namespace EncodingLibrary.ViewModels
 
         private void DetectInputEncodingCommand_Execute(object parameter)
         {
-            if (String.IsNullOrEmpty(InputText))
+            try
             {
-                ErrorMessages?.Add("Необходимо указать текст для определения кодировки!");
-                return;
-            }
-
-            var encodings = InputText.DetectEncodings().Select(e => e.HeaderName).ToList();
-
-            if (encodings == null || encodings.Count == 0)
-            {
-                ErrorMessages?.Add("Для текста не удалось определить подходящие кодировки!");
-
-                return;
-            }
-
-            if (encodings.Count == 1)
-            {
-                SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == encodings.First());
-
-                return;
-            }
-
-            _ = _dialogService.ShowDialog<SelectEncodingWindow, SelectEncodingWindowViewModel, string>
-            (
-                onCloseCallback: delegate(string selectedEncoding)
+                if (String.IsNullOrEmpty(InputText))
                 {
-                    if (!string.IsNullOrEmpty(selectedEncoding))
+                    throw new Exception("Необходимо указать текст для определения кодировки!");
+                }
+
+                var encodings = InputText.DetectEncodings().Select(e => e.HeaderName).ToList();
+
+                if (encodings == null || encodings.Count == 0)
+                {
+                    throw new Exception("Для текста не удалось определить подходящие кодировки!");
+                }
+
+                if (encodings.Count == 1)
+                {
+                    SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == encodings.First());
+
+                    return;
+                }
+
+                _ = _dialogService.ShowDialog<SelectEncodingWindow, SelectEncodingWindowViewModel, string>
+                (
+                    onCloseCallback: (dialogResult, selectedEncoding) =>
                     {
-                        this.SelectedInputEncodingName = selectedEncoding;
-                    }
-                },
-                ViewModelparameters: encodings
-            );
+                        if (dialogResult.HasValue && dialogResult.Value)
+                        {
+                            SelectedInputEncodingName = selectedEncoding;
+                        }
+                    },
+                    ViewModelparameters: encodings
+                );
+
+            }
+            catch (Exception ex)
+            {
+                this.ErrorMessages?.Add(ex.Message);
+            }
         }
+
+        
 
 
         private void OpenFileCommand_Execute(object parameter)
