@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:EncodingLibrary" 
         xmlns:viewmodels="clr-namespace:EncodingLibrary.ViewModels" 
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" 
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Background="#FFEFEFEF"
         WindowStartupLocation="CenterScreen"
@@ -286,7 +285,7 @@
             <ui:TextBox Margin="0 10 0 0" Grid.Row="2" 
                      Opacity="0"
                       d:Opacity="1"
-                         
+                         ClearButtonEnabled="False"
                              Grid.Column="0"
                              Foreground="#424242"
                              x:Name="InputTextBox" 
@@ -295,6 +294,9 @@
                              AcceptsReturn="True"
                              VerticalScrollBarVisibility="Visible"
                              Text="{Binding InputText, Mode=TwoWay}">
+                <ui:TextBox.Effect>
+                    <DropShadowEffect Opacity="0"/>
+                </ui:TextBox.Effect>
             </ui:TextBox>
 
             <TextBox Margin="0 10 0 0" Grid.Row="2" 
@@ -378,7 +380,7 @@
                              FontSize="16"
                              FontWeight="Bold"
                              d:Foreground="Gray"
-                             Foreground="#FF9F53CC"/>
+                             Foreground="Transparent"/>
                     </ui:Button.Content>
                 </ui:Button>
 
@@ -424,7 +426,8 @@
                          VerticalAlignment="Stretch"
                          ScrollViewer.CanContentScroll="True"
                          Height="66"
-                         ItemContainerStyle="{StaticResource ErrorListBoxItem}">
+                         ItemContainerStyle="{StaticResource ErrorListBoxItem}" 
+                         d:ItemsSource="{d:SampleData ItemCount=5}">
                 </ListBox>
             </DockPanel>
 

@@ -1,4 +1,5 @@
-﻿using Encoder.Services;
+﻿using Encoder.Utils.Collections;
+using Encoder.Services;
 using Encoder.ViewModels;
 using Encoder.Views;
 using EncodingLibrary.Commands;
@@ -97,12 +98,12 @@ namespace EncodingLibrary.ViewModels
         }
 
         // Список сообщений с ошибками
-        private ObservableCollection<string> _errorMessages;
+        private UniqueObservableCollection<string> _errorMessages;
 
         /// <summary>
         /// Список сообщений с ошибками
         /// </summary>
-        public ObservableCollection<string> ErrorMessages
+        public UniqueObservableCollection<string> ErrorMessages
         {
             get => _errorMessages;
             set
@@ -209,12 +210,12 @@ namespace EncodingLibrary.ViewModels
         public CommandBase OpenFileCommand
         {
             get
-            {
-                return _openFileCommand ?? (_openFileCommand =
-                    new RelayCommand
-                    (
-                        execute: OpenFileCommand_Execute
-                    ));
+            {    
+                 return _openFileCommand ?? (_openFileCommand =
+                     new RelayCommand
+                     (
+                         execute: OpenFileCommand_Execute
+                     ));
             }
         }
 
@@ -246,7 +247,7 @@ namespace EncodingLibrary.ViewModels
             _selectedOutputEncodingName = string.Empty;
             _inputText = string.Empty;
             _outputText = string.Empty;
-            _errorMessages = new ObservableCollection<string>();
+            _errorMessages = new UniqueObservableCollection<string>();
 
             ErrorMessages.CollectionChanged += ErrorMessages_CollectionChanged;
         }
@@ -304,7 +305,7 @@ namespace EncodingLibrary.ViewModels
         
 
 
-        private void OpenFileCommand_Execute(object parameter)
+        private async void OpenFileCommand_Execute(object parameter)
         {
             try
             {
@@ -313,12 +314,16 @@ namespace EncodingLibrary.ViewModels
 
                 if (openfileDialog.ShowDialog() == true)
                 {
-                    InputText = File.ReadAllText(openfileDialog.FileName);
+                    using (StreamReader reader = new StreamReader(openfileDialog.FileName))
+                    {
+                        InputText = await reader.ReadToEndAsync();
+                        SelectedInputEncodingName = reader.CurrentEncoding.HeaderName;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessages?.Add(ex.Message);
+                _errorMessages?.Add(ex.Message);
             }
         }
 
@@ -353,11 +358,11 @@ namespace EncodingLibrary.ViewModels
                     sourceEncodingName: SelectedInputEncodingName,
                     destinationEncodingName: SelectedOutputEncodingName
                 );
+
+                ErrorMessages?.Clear();
             }
             catch (Exception ex)
             {
-                ErrorMessages?.Clear();
-
                 ErrorMessages?.Add(ex.Message);
 
                 await Task.Delay(200);
