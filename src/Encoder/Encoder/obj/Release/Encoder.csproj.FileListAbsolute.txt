@@ -60,6 +60,13 @@ C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Rele
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\obj\Release\Encoder.csproj.CopyComplete
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Release\EncodingLibrary.dll
 C:\Users\525.khokhlovns\source\repos\clones\Encoder\src\Encoder\Encoder\bin\Release\EncodingLibrary.pdb
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder.csproj.SuggestedBindingRedirects.cache
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Views\MainWindow.g.cs
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Views\SelectEncodingWindow.g.cs
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\App.g.cs
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder_MarkupCompile.cache
+C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder_MarkupCompile.lref
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\Encoder.exe.config
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\Encoder.exe
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\Encoder.pdb
@@ -79,13 +86,6 @@ C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\Syst
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\System.Threading.Tasks.Extensions.xml
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\bin\Release\Wpf.Ui.xml
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder.csproj.AssemblyReference.cache
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder.csproj.SuggestedBindingRedirects.cache
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Views\MainWindow.g.cs
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Views\SelectEncodingWindow.g.cs
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\App.g.cs
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder_MarkupCompile.cache
-C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Encoder_MarkupCompile.lref
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\App.baml
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Views\MainWindow.baml
 C:\Users\Admin\Desktop\Encoder-main\Encoder\src\Encoder\Encoder\obj\Release\Views\SelectEncodingWindow.baml
