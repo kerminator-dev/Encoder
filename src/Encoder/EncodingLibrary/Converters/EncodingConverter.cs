@@ -13,24 +13,22 @@ namespace EncodingLibrary.Converters
         public EncodingConverter(string sourceText, string sourceEncodingName, string destinationEncodingName)
         {
             if (string.IsNullOrEmpty(sourceEncodingName))
-                throw new Exception("Должна быть выбрана исходная кодировка текста!");
+                throw new ArgumentNullException("Должна быть выбрана исходная кодировка текста!");
 
             if (string.IsNullOrEmpty(destinationEncodingName))
-                throw new Exception("Должна быть выбрана конечная кодировка текста!");
+                throw new ArgumentNullException("Должна быть выбрана конечная кодировка текста!");
+
+            if (sourceEncodingName == destinationEncodingName)
+                throw new ArgumentException("Исходная кодировка должна отличаться от конечной кодировки!");
 
             if (string.IsNullOrEmpty(sourceText))
-                throw new Exception("Исходный текст должен иметь содержимое!");
+                throw new ArgumentNullException("Исходный текст должен иметь содержимое!");
 
             _sourceText = sourceText;
             _sourceEncodingName = sourceEncodingName;
             _destinationEncodingName = destinationEncodingName;
         }
 
-
-        /// <summary>
-        /// Конвертировать
-        /// </summary>
-        /// <returns>Результат выполнения конвертации</returns>
         public string Convert()
         {
             // Смена кодировки

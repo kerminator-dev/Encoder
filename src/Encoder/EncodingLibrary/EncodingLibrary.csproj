@@ -43,12 +43,9 @@
   <ItemGroup>
     <Compile Include="Converters\EncodingConverter.cs" />
     <Compile Include="Converters\IConvertible.cs" />
-    <Compile Include="ResultOf.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
