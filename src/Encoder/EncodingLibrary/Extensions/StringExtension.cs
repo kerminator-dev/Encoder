@@ -7,14 +7,14 @@ namespace EncodingLibrary.Extensions
 {
     public static class StringExtension
     {
-        public static string ChangeEncoding(this string sourceText, string sourceEncodingName, string destinationEncodingName)
+        public static string ChangeEncoding(this string text, string sourceEncodingName, string destinationEncodingName)
         {
-            return new EncodingConverter
+            return EncodingConverter.Convert
             (
-                sourceText: sourceText,
+                text: text,
                 sourceEncodingName: sourceEncodingName,
                 destinationEncodingName: destinationEncodingName
-            ).Convert();
+            );
         }
 
         public static Encoding DetectEncoding(this string text)

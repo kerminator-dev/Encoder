@@ -1,4 +1,5 @@
 ﻿using Encoder.Services;
+using Encoder.Views;
 using EncodingLibrary.ViewModels;
 using EncodingLibrary.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,7 @@ namespace EncodingLibrary
 
         protected void ConfigureServices(ServiceCollection services)
         {
+            services.AddTransient<SelectEncodingWindow>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();

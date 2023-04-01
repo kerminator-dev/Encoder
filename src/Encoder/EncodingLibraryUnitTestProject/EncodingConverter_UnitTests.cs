@@ -5,7 +5,7 @@ using System;
 namespace EncodingLibraryUnitTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class EncodingConverter_UnitTests
     {
         [TestMethod]
         public void UTF8_To_Windows1251()

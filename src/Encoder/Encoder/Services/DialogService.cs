@@ -1,6 +1,7 @@
 ﻿using Encoder.Interfaces;
 using EncodingLibrary;
 using EncodingLibrary.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -11,11 +12,18 @@ namespace Encoder.Services
 {
     internal class DialogService : IDialogService
     {
+        private readonly IServiceProvider _serviceProvider;
+
+        public DialogService(IServiceProvider serviceProvider)
+        {
+            _serviceProvider= serviceProvider;
+        }
+
         public bool? ShowDialog<TView, TViewModel, TResult>(Action<bool?, TResult> onCloseCallback, params object[] ViewModelparameters)
             where TView : Window
             where TViewModel : ViewModelBase, IResultOf<TResult>
         {
-            TView view = Activator.CreateInstance<TView>();
+            TView view = _serviceProvider.GetRequiredService<TView>();
             var viewModel = Activator.CreateInstance(typeof(TViewModel), ViewModelparameters);
 
             EventHandler closeEventHandler = default;
@@ -33,12 +41,11 @@ namespace Encoder.Services
             return view.ShowDialog();
         }
 
-
         public bool? ShowDialog<TView, TViewModel>()
             where TView : Window
             where TViewModel : ViewModelBase
         {
-            TView view = Activator.CreateInstance<TView>();
+            TView view = _serviceProvider.GetRequiredService<TView>();
             var viewModel = Activator.CreateInstance(typeof(TViewModel));
 
             view.DataContext = viewModel;
@@ -48,7 +55,7 @@ namespace Encoder.Services
         public bool? ShowDialog<TView>()
             where TView : Window
         {
-            return Activator.CreateInstance<TView>().ShowDialog();
+            return _serviceProvider.GetRequiredService<TView>().ShowDialog();
         }
     }
 }

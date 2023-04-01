@@ -1,18 +1,14 @@
-﻿using Encoder.Utils.Collections;
-using Encoder.Services;
+﻿using Encoder.Services;
+using Encoder.Utils.Collections;
 using Encoder.ViewModels;
 using Encoder.Views;
 using EncodingLibrary.Commands;
-using EncodingLibrary.Converters;
 using EncodingLibrary.Extensions;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EncodingLibrary.ViewModels
@@ -149,11 +145,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                return _convertCommand ?? (_convertCommand =
-                    new RelayCommand
+                if (_convertCommand == null)
+                {
+                    _convertCommand = new RelayCommand
                     (
                         execute: async (p) => await ConvertCommand_Execute(p)
-                    ));
+                    );
+                }
+
+                return _convertCommand;
             }
         }
 
@@ -163,11 +163,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                return _tupleEncodingsCommand ?? (_tupleEncodingsCommand =
-                   new RelayCommand
-                   (
-                       execute: (p) => TupleEncodingsCommand_Execute(p)
-                   ));
+                if (_tupleEncodingsCommand == null)
+                {
+                    _tupleEncodingsCommand = new RelayCommand
+                    (
+                        execute: (p) => TupleEncodingsCommand_Execute(p)
+                    );  
+                }
+
+                return _tupleEncodingsCommand;
             }
         }
 
@@ -177,11 +181,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                return _tupleCommand ?? (_tupleCommand =
-                    new RelayCommand
+                if (_tupleCommand == null)
+                {
+                    _tupleCommand = new RelayCommand
                     (
                         execute: (p) => TupleTextCommand_Execute(p)
-                    ));
+                    );
+                }
+
+                return _tupleCommand;
             }
         }
 
@@ -194,11 +202,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                return _clearFieldsCommand ?? (_clearFieldsCommand =
-                    new RelayCommand
+                if (_clearFieldsCommand == null)
+                {
+                    _clearFieldsCommand = new RelayCommand
                     (
                         execute: (p) => { InputText = OutputText = string.Empty; }
-                    ));
+                    );
+                }
+
+                return _clearFieldsCommand;
             }
         }
 
@@ -211,11 +223,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {    
-                 return _openFileCommand ?? (_openFileCommand =
-                     new RelayCommand
+                if (_openFileCommand == null)
+                {
+                    _openFileCommand = new RelayCommand
                      (
                          execute: OpenFileCommand_Execute
-                     ));
+                     );
+                }
+
+                return _openFileCommand;
             }
         }
 
@@ -228,11 +244,15 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                return _detectInputEncodingCommand ?? (_detectInputEncodingCommand =
-                    new RelayCommand
+                if (_detectInputEncodingCommand == null)
+                {
+                    _detectInputEncodingCommand = new RelayCommand
                     (
                         execute: DetectInputEncodingCommand_Execute
-                    ));
+                    );
+                }
+
+                return _detectInputEncodingCommand;
             }
         }
 
@@ -266,7 +286,7 @@ namespace EncodingLibrary.ViewModels
             {
                 if (String.IsNullOrEmpty(InputText))
                 {
-                    throw new Exception("Необходимо указать текст для определения кодировки!");
+                    throw new ArgumentNullException("Исходный текст должен иметь содердимое!");
                 }
 
                 var encodings = InputText.DetectEncodings().Select(e => e.HeaderName).ToList();
@@ -301,9 +321,6 @@ namespace EncodingLibrary.ViewModels
                 this.ErrorMessages?.Add(ex.Message);
             }
         }
-
-        
-
 
         private async void OpenFileCommand_Execute(object parameter)
         {
@@ -343,7 +360,6 @@ namespace EncodingLibrary.ViewModels
             var temp = String.IsNullOrEmpty(this.SelectedInputEncodingName) ? null : this.SelectedInputEncodingName;
             this.SelectedInputEncodingName = String.IsNullOrEmpty(this.SelectedOutputEncodingName) ? null : this.SelectedOutputEncodingName;
             this.SelectedOutputEncodingName = temp;
-
         }
 
         /// <summary>
@@ -361,11 +377,15 @@ namespace EncodingLibrary.ViewModels
 
                 ErrorMessages?.Clear();
             }
-            catch (Exception ex)
-            {
-                ErrorMessages?.Add(ex.Message);
 
-                await Task.Delay(200);
+            catch (AggregateException ex)
+            {
+                foreach (var exception in ex.InnerExceptions)
+                {
+                    ErrorMessages?.Add(ex.Message);
+
+                    await Task.Delay(200);
+                }
             }
         }
 
