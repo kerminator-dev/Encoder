@@ -35,6 +35,8 @@ namespace Encoder.Commands
         {
             if (dialogResult.HasValue && dialogResult.Value)
             {
+                // Если DiaglogResult = OK (т. е. что-то было выбрано
+
                 _onEncodingSelected?.Invoke(selectedEncoding);
             }
         }

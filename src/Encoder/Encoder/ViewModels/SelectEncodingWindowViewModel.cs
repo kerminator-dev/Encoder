@@ -40,5 +40,7 @@ namespace Encoder.ViewModels
         {
             return SelectedEncoding;
         }
+
+
     }
 }

@@ -33,14 +33,42 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Выберите кодировку" FontSize="{StaticResource DefaultFontSize}" Grid.Row="0" Grid.ColumnSpan="2" Foreground="{StaticResource DefaultForeground}"/>
+            <TextBlock Text="Выберите кодировку" 
+                       FontSize="{StaticResource DefaultFontSize}" 
+                       Grid.Row="0" Grid.ColumnSpan="2"
+                       d:Opacity="1"
+                       Opacity="0"
+                       Foreground="{StaticResource DefaultForeground}">
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
+
 
             <TextBlock Grid.Row="1" 
                        Grid.Column="0" 
                        FontSize="{StaticResource DefaultFontSize}" 
                        Text="Определено подходящих кодировок:"  
                        Foreground="{StaticResource DefaultForeground}" 
-                       Margin="0 0 5 4" />
+                       d:Opacity="1"
+                       Opacity="0"
+                       Margin="0 0 5 4">
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.3" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
             <TextBlock Grid.Row="1" 
                        Grid.Column="1" 
                        Margin="0 0 0 4"
@@ -58,11 +86,24 @@
                  Grid.Row="1" 
                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                  HorizontalAlignment="Stretch" 
+                 d:Opacity="1"
+                 Opacity="0"
                  ItemsSource="{Binding Encodings, Mode=OneTime}" 
                  SelectedItem="{Binding SelectedEncoding, Mode=TwoWay}" 
                  VerticalAlignment="Stretch" 
+                 
                  IsEnabled="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                 />
+                 >
+            <ListBox.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </ListBox.Triggers>
+        </ListBox>
 
 
 
@@ -74,13 +115,36 @@
                        Content="Отмена" 
                        Margin="0 0 10 0"
                        Click="CancelButton_Click" 
-                       Cursor="Hand"/>
+                       d:Opacity="1"
+                       Opacity="0"
+                       Cursor="Hand">
+                <ui:Button.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.7" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </ui:Button.Triggers>
+            </ui:Button>
 
             <ui:Button x:Name="SelectButton"
                        Content="Выбрать" 
                        Click="SelectButton_Click" 
                        Style="{StaticResource ConfirmButton}"
+                       d:Opacity="1"
+                       Opacity="0"
                        >
+                <ui:Button.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4" BeginTime="0:0:0.8" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </ui:Button.Triggers>
             </ui:Button>
         </StackPanel>
     </Grid>

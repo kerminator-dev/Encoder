@@ -36,10 +36,5 @@ namespace EncodingLibrary.Views
         {
             Clipboard.SetText(OutputTextBox.Text);
         }
-
-        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
