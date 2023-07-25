@@ -1,16 +1,12 @@
-﻿using Encoder.Interfaces;
-using EncodingLibrary.ViewModels;
+﻿using EncodingLibrary.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
-namespace Encoder.Services
+namespace Encoder.Builders
 {
-    public class DialogBuilderService
+    public class DialogBuilder : IBuilder<Window>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -18,19 +14,19 @@ namespace Encoder.Services
         private Type _viewModelType;
         private object[] _viewModelParams;
 
-        public DialogBuilderService(IServiceProvider serviceProvider) 
+        public DialogBuilder(IServiceProvider serviceProvider) 
         {
             _serviceProvider = serviceProvider;
         }
 
-        public DialogBuilderService WithView<TView>() where TView : Window
+        public DialogBuilder WithView<TView>() where TView : Window
         {
             _viewType = typeof(TView);
 
             return this;
         }
 
-        public DialogBuilderService WithViewModel<TViewModel>() 
+        public DialogBuilder WithViewModel<TViewModel>() 
             where TViewModel : ViewModelBase
         {
             _viewModelType = typeof(TViewModel);
@@ -38,14 +34,14 @@ namespace Encoder.Services
             return this;
         }
 
-        public DialogBuilderService WithViewModelParams(params object[] parameters) 
+        public DialogBuilder WithViewModelParams(params object[] parameters) 
         {
             _viewModelParams = parameters;
 
             return this;
         }
 
-        public bool? ShowDialog()
+        public Window Build()
         {
             var view = _serviceProvider.GetRequiredService(_viewType) as Window;
 
@@ -61,7 +57,7 @@ namespace Encoder.Services
                 view.DataContext = viewModel;
             }
 
-            return view.ShowDialog();
+            return view;
         }
     }
 }

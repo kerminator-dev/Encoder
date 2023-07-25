@@ -1,8 +1,7 @@
-﻿using Encoder.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Encoder.Utils.Collections
+namespace Encoder.Collections
 {
     public class UniqueObservableCollection<T> : ObservableCollection<T>
     {

@@ -1,14 +1,10 @@
 ﻿using Encoder.Interfaces;
-using EncodingLibrary;
 using EncodingLibrary.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 using System.Windows;
-using Wpf.Ui.Mvvm.Interfaces;
 
-namespace Encoder.Services
+namespace Encoder.Builders
 {
     internal class DialogService : IDialogService
     {
@@ -19,9 +15,9 @@ namespace Encoder.Services
             _serviceProvider= serviceProvider;
         }
 
-        public bool? ShowDialog<TView, TViewModel, TResult>(Action<bool?, TResult> onCloseCallback, params object[] ViewModelparameters)
+        public TView GetDialog<TView, TViewModel, TResult>(Action<bool?, TResult> onCloseCallback, params object[] ViewModelparameters)
             where TView : Window
-            where TViewModel : ViewModelBase, IResultOf<TResult>
+            where TViewModel : ViewModelBase, IDialogResultOf<TResult>
         {
             TView view = _serviceProvider.GetRequiredService<TView>();
             var viewModel = Activator.CreateInstance(typeof(TViewModel), ViewModelparameters);
@@ -29,7 +25,7 @@ namespace Encoder.Services
             EventHandler closeEventHandler = default;
             closeEventHandler += (o, e) =>
             {
-                onCloseCallback(view.DialogResult, (viewModel as IResultOf<TResult>).GetResult());
+                onCloseCallback(view.DialogResult, (viewModel as IDialogResultOf<TResult>).GetResult());
 
                 view.Closed -= closeEventHandler;
             };
@@ -38,10 +34,10 @@ namespace Encoder.Services
 
             view.DataContext = viewModel;
 
-            return view.ShowDialog();
+            return view;
         }
 
-        public bool? ShowDialog<TView, TViewModel>()
+        public TView GetDialog<TView, TViewModel>()
             where TView : Window
             where TViewModel : ViewModelBase
         {
@@ -49,13 +45,13 @@ namespace Encoder.Services
             var viewModel = Activator.CreateInstance(typeof(TViewModel));
 
             view.DataContext = viewModel;
-            return view.ShowDialog();
+            return view;
         }
 
-        public bool? ShowDialog<TView>()
+        public TView GetDialog<TView>()
             where TView : Window
         {
-            return _serviceProvider.GetRequiredService<TView>().ShowDialog();
+            return _serviceProvider.GetRequiredService<TView>();
         }
     }
 }

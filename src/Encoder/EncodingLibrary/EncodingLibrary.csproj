@@ -41,7 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\EncodingConverter.cs" />
+    <Compile Include="Converters\DefaultEncodingConverter.cs" />
+    <Compile Include="Converters\IEncodingConverter.cs" />
+    <Compile Include="Exceptions\EmptySourceTextException.cs" />
+    <Compile Include="Exceptions\InvalidEncodingException.cs" />
+    <Compile Include="Exceptions\MissingSourceEncodingException.cs" />
+    <Compile Include="Exceptions\MissingTargetEncodingException.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

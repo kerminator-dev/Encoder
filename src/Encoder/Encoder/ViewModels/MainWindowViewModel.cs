@@ -1,12 +1,11 @@
-﻿using Encoder.Services;
-using Encoder.Utils.Collections;
+﻿using Encoder.Collections;
+using Encoder.Commands;
+using Encoder.Builders;
 using Encoder.ViewModels;
-using Encoder.Views;
 using EncodingLibrary.Commands;
+using EncodingLibrary.Converters;
 using EncodingLibrary.Extensions;
-using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +17,7 @@ namespace EncodingLibrary.ViewModels
     /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
-        #region Поля и Свойства
-
-        private IDialogService _dialogService;
+        private ErrorMessagesViewModel _errorMessagesViewModel;
 
         // Выбранная кодировка из выпадающего списка
         private string _selectedInputEncodingName;
@@ -36,7 +33,6 @@ namespace EncodingLibrary.ViewModels
                 _selectedInputEncodingName = value;
 
                 OnPropertyChanged(nameof(SelectedInputEncodingName));
-                ConvertCommand.OnCanExecuteChanged();
             }
         }
 
@@ -55,7 +51,6 @@ namespace EncodingLibrary.ViewModels
                 _selectedOutputEncodingName = value;
 
                 OnPropertyChanged(nameof(SelectedOutputEncodingName));
-                ConvertCommand.OnCanExecuteChanged();
             }
         }
 
@@ -93,28 +88,19 @@ namespace EncodingLibrary.ViewModels
             }
         }
 
-        // Список сообщений с ошибками
-        private UniqueObservableCollection<string> _errorMessages;
-
         /// <summary>
         /// Список сообщений с ошибками
         /// </summary>
         public UniqueObservableCollection<string> ErrorMessages
         {
-            get => _errorMessages;
-            set
-            {
-                _errorMessages = value;
-
-                OnPropertyChanged(nameof(HasErrors));
-                OnPropertyChanged(nameof(ErrorMessages));
-            }
+            get => _errorMessagesViewModel.ErrorMessages;
+            set => _errorMessagesViewModel.ErrorMessages = value;
         }
 
         /// <summary>
         /// Есть ли ошибки
         /// </summary>
-        public bool HasErrors => ErrorMessages.Count > 0;
+        public bool HasErrors => _errorMessagesViewModel.HasErrors;
 
         private string[] _allEncodingNames;
         public string[] AllEncodingNames
@@ -133,7 +119,6 @@ namespace EncodingLibrary.ViewModels
             }
         }
 
-        #region Комманды
 
         // Конвертировать
         private CommandBase _convertCommand;
@@ -225,9 +210,14 @@ namespace EncodingLibrary.ViewModels
             {    
                 if (_openFileCommand == null)
                 {
-                    _openFileCommand = new RelayCommand
+                    _openFileCommand = new OpenFileContentCommand
                      (
-                         execute: OpenFileCommand_Execute
+                         onFileOpened: (fileInfo) =>
+                         {
+                             InputText = fileInfo.Content;
+                             SelectedInputEncodingName = fileInfo.Encoding;
+                         },
+                         onException: _errorMessagesViewModel.AddException
                      );
                 }
 
@@ -244,30 +234,40 @@ namespace EncodingLibrary.ViewModels
         {
             get
             {
-                if (_detectInputEncodingCommand == null)
-                {
-                    _detectInputEncodingCommand = new RelayCommand
-                    (
-                        execute: DetectInputEncodingCommand_Execute
-                    );
-                }
-
                 return _detectInputEncodingCommand;
             }
         }
 
-        #endregion // Команды
+        private CommandBase _openWindowAboutProgramCommand;
 
-        #endregion // Поля и Свойства
+        public CommandBase OpenWindowAboutProgramCommand
+        {
+            get
+            {
+                if (_openWindowAboutProgramCommand == null)
+                {
+                    _openWindowAboutProgramCommand = new OpenWindowAboutProgramCommand();
+                }
+
+                return _openWindowAboutProgramCommand;
+            }
+        }
+
 
         public MainWindowViewModel(IDialogService dialogService)
         {
-            _dialogService = dialogService;
             _selectedInputEncodingName = string.Empty;
             _selectedOutputEncodingName = string.Empty;
             _inputText = string.Empty;
             _outputText = string.Empty;
-            _errorMessages = new UniqueObservableCollection<string>();
+            _errorMessagesViewModel = new ErrorMessagesViewModel();
+
+            _detectInputEncodingCommand = new DetectEncodingCommand
+            (
+                dialogService,
+                onException: (ex) => _errorMessagesViewModel.AddException(ex),
+                onEncodingSelected: (encoding) => SelectedInputEncodingName = encoding
+            );
 
             ErrorMessages.CollectionChanged += ErrorMessages_CollectionChanged;
         }
@@ -280,76 +280,12 @@ namespace EncodingLibrary.ViewModels
 
         #region Методы для команд
 
-        private void DetectInputEncodingCommand_Execute(object parameter)
-        {
-            try
-            {
-                if (String.IsNullOrEmpty(InputText))
-                {
-                    throw new ArgumentNullException("Исходный текст должен иметь содердимое!");
-                }
-
-                var encodings = InputText.DetectEncodings().Select(e => e.HeaderName).ToList();
-
-                if (encodings == null || encodings.Count == 0)
-                {
-                    throw new Exception("Для текста не удалось определить подходящие кодировки!");
-                }
-
-                if (encodings.Count == 1)
-                {
-                    SelectedInputEncodingName = AllEncodingNames.FirstOrDefault(e => e == encodings.First());
-
-                    return;
-                }
-
-                _ = _dialogService.ShowDialog<SelectEncodingWindow, SelectEncodingWindowViewModel, string>
-                (
-                    onCloseCallback: (dialogResult, selectedEncoding) =>
-                    {
-                        if (dialogResult.HasValue && dialogResult.Value)
-                        {
-                            SelectedInputEncodingName = selectedEncoding;
-                        }
-                    },
-                    ViewModelparameters: encodings
-                );
-
-            }
-            catch (Exception ex)
-            {
-                this.ErrorMessages?.Add(ex.Message);
-            }
-        }
-
-        private async void OpenFileCommand_Execute(object parameter)
-        {
-            try
-            {
-                OpenFileDialog openfileDialog = new OpenFileDialog();
-                openfileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|xml Файлы (*.xml)|*.xml|Все файлы (*.*)|*.*";
-
-                if (openfileDialog.ShowDialog() == true)
-                {
-                    using (StreamReader reader = new StreamReader(openfileDialog.FileName))
-                    {
-                        InputText = await reader.ReadToEndAsync();
-                        SelectedInputEncodingName = reader.CurrentEncoding.HeaderName;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _errorMessages?.Add(ex.Message);
-            }
-        }
-
         /// <summary>
         /// Поменять текст местами, для метода Execute() команды TupleCommand
         /// </summary>
         /// <param name="parameter">Параметр комманды</param>
         private void TupleTextCommand_Execute(object parameter)
-        { 
+        {
             var temp = this.InputText;
             this.InputText = this.OutputText;
             this.OutputText = temp;
@@ -368,24 +304,29 @@ namespace EncodingLibrary.ViewModels
         /// <param name="parameter"></param>
         private async Task ConvertCommand_Execute(object parameter)
         {
+            if (!(parameter is string))
+                return;
+
+            var text = parameter as string;
+
             try
             {
-                OutputText = InputText.ChangeEncoding(
+                OutputText = text.ChangeEncoding
+                (
                     sourceEncodingName: SelectedInputEncodingName,
-                    destinationEncodingName: SelectedOutputEncodingName
+                    destinationEncodingName: SelectedOutputEncodingName,
+                    encodingConverter: new DefaultEncodingConverter()
                 );
 
                 ErrorMessages?.Clear();
             }
-
             catch (AggregateException ex)
             {
-                foreach (var exception in ex.InnerExceptions)
-                {
-                    ErrorMessages?.Add(ex.Message);
-
-                    await Task.Delay(200);
-                }
+                await _errorMessagesViewModel.AddExceptionsAsync(ex.InnerExceptions.ToArray());
+            }
+            catch (Exception ex)
+            {
+                _errorMessagesViewModel.AddException(ex);
             }
         }
 

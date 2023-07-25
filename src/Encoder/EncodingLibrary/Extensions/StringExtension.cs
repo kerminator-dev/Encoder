@@ -1,20 +1,14 @@
 ﻿using EncodingLibrary.Converters;
+using EncodingLibrary.Exceptions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace EncodingLibrary.Extensions
 {
     public static class StringExtension
     {
-        public static string ChangeEncoding(this string text, string sourceEncodingName, string destinationEncodingName)
-        {
-            return EncodingConverter.Convert
-            (
-                text: text,
-                sourceEncodingName: sourceEncodingName,
-                destinationEncodingName: destinationEncodingName
-            );
+        public static string ChangeEncoding(this string text, string sourceEncodingName, string destinationEncodingName, IEncodingConverter encodingConverter)        {
+            return encodingConverter.Convert(text, sourceEncodingName, destinationEncodingName);
         }
 
         public static Encoding DetectEncoding(this string text)
@@ -37,6 +31,9 @@ namespace EncodingLibrary.Extensions
 
         public static IEnumerable<Encoding> DetectEncodings(this string text)
         {
+            if (string.IsNullOrEmpty(text))
+                throw new EmptySourceTextException();
+
             var encodings = new List<Encoding>();
 
             foreach (EncodingInfo ei in Encoding.GetEncodings())

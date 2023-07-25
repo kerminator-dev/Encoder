@@ -12,8 +12,9 @@
         Foreground="Gray"
         Opacity="1"
         d:Opacity="1"
+        SizeToContent="Height"
         Name="Window"
-        Title="Encoding translator" MinHeight="500" MinWidth="620" Width="620" Height="500" Icon="/Images/application-icon.png">
+        Title="Text Encoder" MinHeight="560" MinWidth="620" Width="620" Height="auto" Icon="/Images/application-icon.png">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Style TargetType="MenuItem" x:Key="MenuItemHand">
@@ -49,6 +50,15 @@
                                      BeginTime="0:0:0:0.4"
                                      From="0.0" To="1.0" Duration="00:00:0.6"
                                 />
+
+                    <DoubleAnimation
+                                     Storyboard.TargetName="AboutProgram"        
+                                     Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0:0.5"
+                                     From="0.0" To="1.0" Duration="00:00:0.6"
+                                />
+
+                    
 
                     <!-- Кодировки -->
 
@@ -195,6 +205,9 @@
                 <MenuItem Header="Очистить поля" Command="{Binding ClearFieldsCommand}" />
                 <MenuItem Header="Поменять текст местами" Command="{Binding TupleCommand}" />
             </MenuItem>
+            <MenuItem Name="AboutProgram" Command="{Binding OpenWindowAboutProgramCommand}" Opacity="0" d:Opacity="1" Style="{StaticResource MenuItemHand}" Header="О программе"/>
+
+
         </Menu>
 
         <Grid Margin="15 0 15 15">
@@ -202,6 +215,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*" MinHeight="200" />
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -218,12 +232,13 @@
                        Margin="0 0 0 4"
                        Opacity="0"
                        d:Opacity="1"
+                       Foreground="{StaticResource DefaultForeground}"
+                       FontSize="{StaticResource DefaultFontSize}"
                        Text="Исходная кодировка"
                        Name="InputEncodingText"/>
 
 
-            <ComboBox MinWidth="200"
-                      
+            <ComboBox Foreground="{StaticResource DefaultForeground}"
                       Opacity="0"
                       d:Opacity="1"
                       Grid.Column="0"
@@ -252,7 +267,7 @@
                     <ui:FontIcon
                         Name="InvertEncodingsFontIncon"
                         Glyph="&#xe8ab;"
-                        FontFamily="{StaticResource Segoe Fluent Icons}" 
+                        FontFamily="{StaticResource FluentIcons}" 
                         FontSize="16"
                         FontWeight="Bold"
                         d:Foreground="Gray"
@@ -266,11 +281,14 @@
                        d:Opacity="1"
                        Grid.Column="2"
                        HorizontalAlignment="Right"
+                       Foreground="{StaticResource DefaultForeground}"
+                       FontSize="{StaticResource DefaultFontSize}"
                        Margin="0 0 0 4"
                        Text="Конечная кодировка"
                        Name="OutputEncodingText"/>
 
-            <ComboBox Grid.Row="1" Grid.Column="2" MinWidth="200"
+            <ComboBox Grid.Row="1" Grid.Column="2" 
+                      Foreground="{StaticResource DefaultForeground}"
                       VerticalAlignment="Stretch"
                       ItemsSource="{Binding AllEncodingNames, Mode=OneTime}"
                       SelectedItem="{Binding SelectedOutputEncodingName, Mode=TwoWay}"
@@ -287,33 +305,30 @@
                       d:Opacity="1"
                          ClearButtonEnabled="False"
                              Grid.Column="0"
-                             Foreground="#424242"
+                             Foreground="{StaticResource DefaultForeground}"
                              x:Name="InputTextBox" 
                              VerticalAlignment="Stretch"
                              TextWrapping="NoWrap"
                              AcceptsReturn="True"
                              VerticalScrollBarVisibility="Visible"
                              Text="{Binding InputText, Mode=TwoWay}">
-                <ui:TextBox.Effect>
-                    <DropShadowEffect Opacity="0"/>
-                </ui:TextBox.Effect>
+
             </ui:TextBox>
 
-            <TextBox Margin="0 10 0 0" Grid.Row="2" 
+            <ui:TextBox Margin="0 10 0 0" Grid.Row="2" 
                      Opacity="0"
                       d:Opacity="1"
                      
                      
-                             Foreground="#424242"
-                             Grid.Column="2"
-                             x:Name="OutputTextBox" 
-                             VerticalAlignment="Stretch"
-                             TextWrapping="Wrap"
-                            
-                             AcceptsReturn="True"
-                             VerticalScrollBarVisibility="Visible"
-                             IsReadOnly="True"
-                             Text="{Binding OutputText, Mode=TwoWay}"/>
+                    Foreground="{StaticResource DefaultForeground}"
+                    Grid.Column="2"
+                    x:Name="OutputTextBox" 
+                    VerticalAlignment="Stretch"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Visible"
+                    IsReadOnly="True"
+                    Text="{Binding OutputText, Mode=TwoWay}"/>
 
             <StackPanel Grid.Column="1"
                      
@@ -326,13 +341,15 @@
                         d:Opacity="1"
                         Name="ConvertButton"
                         ToolTip="Изменить кодировку текста"
-                        Command="{Binding ConvertCommand, UpdateSourceTrigger=PropertyChanged}">
+                        Command="{Binding ConvertCommand, UpdateSourceTrigger=PropertyChanged}"
+                    CommandParameter="{Binding InputText}">
+                        
                     <ui:Button.Content>
                         <ui:FontIcon
                             d:Foreground="Gray"
                             Name="ConvertFontIcon"
                             Glyph="&#xe768;"
-                            FontFamily="{StaticResource Segoe Fluent Icons}" 
+                            FontFamily="{StaticResource FluentIcons}" 
                             FontSize="16"
                             FontWeight="Bold"
                             Foreground="Transparent"/>
@@ -354,11 +371,11 @@
                         <ui:FontIcon
                             Name="InvertFieldsFontIcon"
                             d:Foreground="Gray"
-                             Glyph="&#xe8ab;"
-                             FontFamily="{StaticResource Segoe Fluent Icons}" 
-                             FontSize="16"
-                             FontWeight="Bold"
-                             Foreground="Transparent"/>
+                            Glyph="&#xe8ab;"
+                            FontFamily="{StaticResource FluentIcons}"
+                            Opacity="1"
+                            
+                            Foreground="Transparent"/>
                     </Button.Content>
                 </ui:Button>
 
@@ -366,17 +383,17 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
                         Margin="0 5 0 0"
-                        Cursor="Hand"
                         Opacity="0"
                         Style="{StaticResource SquareButton}"
                         d:Opacity="1"
                         Command="{Binding DetectInputEncodingCommand}"
+                        CommandParameter="{Binding InputText}"
                         ToolTip="Определить исходную кодировку">
                     <ui:Button.Content>
                         <ui:FontIcon
                             Name="DetectInputEncodingFontIcon"
                              Glyph="&#xf22c;"
-                             FontFamily="{StaticResource Segoe Fluent Icons}" 
+                             FontFamily="{StaticResource FluentIcons}" 
                              FontSize="16"
                              FontWeight="Bold"
                              d:Foreground="Gray"
@@ -395,37 +412,49 @@
                         Command="{Binding ClearFieldsCommand}"
                         ToolTip="Очистить поля"
                         >
-                        <ui:Button.Content>
+                    <ui:Button.Content>
                         <ui:FontIcon
                             Name="ClearFieldsFontIcon"
                             d:Foreground="Gray"
                             Glyph="&#xef17;"
-                            FontFamily="{StaticResource Segoe Fluent Icons}" 
+                            FontFamily="{StaticResource FluentIcons}" 
                             FontSize="16"
                             FontWeight="Bold"
                             Foreground="Transparent"/>
                     </ui:Button.Content>
                 </ui:Button>
             </StackPanel>
+            
+            <!-- Тут ещё что-то можно добавить для строки 3-->
 
-
-
-            <DockPanel Grid.Row="3"
+            <DockPanel Grid.Row="4"
                        Grid.Column="0"
                        Grid.ColumnSpan="3"
+                       
                        VerticalAlignment="Stretch"
                        Margin="0 5 0 0"
                        MinHeight="70"
+                       Height="auto"
                        Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" >
 
-                <TextBlock Text="Ошибки:"
-                           DockPanel.Dock="Top"
-                           Margin="0 6 0 4"/>
+                <StackPanel Margin="0 6 0 4" DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Ошибки ("
+                               Foreground="{StaticResource DefaultForeground}"
+                               FontSize="{StaticResource DefaultFontSize}"/>
+                    <TextBlock Text="{Binding ErrorMessages.Count}"
+                               Foreground="{StaticResource DefaultForeground}"
+                               FontSize="{StaticResource DefaultFontSize}"/>
+                    <TextBlock Text="):"
+                               FontSize="{StaticResource DefaultFontSize}"
+                               Foreground="{StaticResource DefaultForeground}"/>
+                </StackPanel>
+                
                 <ListBox ItemsSource="{Binding ErrorMessages}"
                          DockPanel.Dock="Top"
                          VerticalAlignment="Stretch"
                          ScrollViewer.CanContentScroll="True"
-                         Height="66"
+                         MinHeight="66"
+                         MaxHeight="120"
                          ItemContainerStyle="{StaticResource ErrorListBoxItem}" 
                          d:ItemsSource="{d:SampleData ItemCount=5}">
                 </ListBox>

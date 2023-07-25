@@ -2,20 +2,31 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EncodingLibrary"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
         
 
         
         <ResourceDictionary>
+            
+            
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemesDictionary Theme="Unknown" />
+                <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}" x:Key="DefaultButton">
                 <Setter Property="Cursor" Value="Hand"/>
             </Style>
+
+
+            <sys:Double      x:Key="IconFontSize">16</sys:Double>
+            <SolidColorBrush x:Key="DefaultForeground">Gray</SolidColorBrush>
+            <sys:Double      x:Key="DefaultFontSize">13</sys:Double>
+            <FontWeight      x:Key="IconFontWeight">Bold</FontWeight>
+
+            <FontFamily x:Key="FluentIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
 
             <Style TargetType="{x:Type ui:Button}" x:Key="ConfirmButton" BasedOn="{StaticResource DefaultButton}">
                 <Setter Property="Background" Value="#80b9ee"/>
@@ -32,6 +43,20 @@
                 <Setter Property="Width" Value="40"/>
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Height" Value="40"/>
+            </Style>
+
+            <Style TargetType="{x:Type ui:FontIcon}" x:Key="DefaultFontIcon">
+                <Setter Property="FontSize" Value="{StaticResource IconFontSize}"/>
+                <Setter Property="FontWeight" Value="{StaticResource IconFontWeight}"/>
+            </Style>
+
+            <Style TargetType="{x:Type ui:TextBox}" x:Key="DefaultTexBoxStyle">
+                <Setter Property="Foreground" Value="#424242"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="AcceptsReturn" Value="True"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+                <Setter Property="ClearButtonEnabled" Value="False"/>
             </Style>
 
             <Style TargetType="ToolTip">
@@ -107,7 +132,7 @@
                 </Setter>
             </Style>
             
-            <FontFamily x:Key="Segoe Fluent Icons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+            
             
         </ResourceDictionary>
         

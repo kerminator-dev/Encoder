@@ -22,14 +22,24 @@ namespace EncodingLibrary.Views
             InputTextBox.Paste();
         }
 
+
+        // Если юзать Command CopyTextToClipboadCommand, то 
+        // Нужно, чтобы Binding точно отработал (подтверждение ввода или фокус на другой
+        // элемент управления UI). Можно сделать посимвольное обновление свойства в MainWindowViewModel, но 
+        // Могут возникнуть нюансы с производительностью
         private void EditMenu_CopyInputText(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(InputTextBox.Text);
         }
-
+       
         private void EditMenu_CopyOutputText(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(OutputTextBox.Text);
+        }
+
+        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

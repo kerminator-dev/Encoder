@@ -1,19 +1,14 @@
 ﻿using Encoder.Interfaces;
-using EncodingLibrary;
 using EncodingLibrary.ViewModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Encoder.ViewModels
 {
-    public class SelectEncodingWindowViewModel : ViewModelBase, IResultOf<string>
+    public class SelectEncodingWindowViewModel : ViewModelBase, IDialogResultOf<string>
     {
         public IEnumerable<string> Encodings { get; private set; }
-
 
         private string _selectedEncoding;
         public string SelectedEncoding
@@ -32,8 +27,13 @@ namespace Encoder.ViewModels
 
         public SelectEncodingWindowViewModel(IEnumerable<string> encodings)
         {
+            if (encodings == null || !encodings.Any())
+            {
+                throw new ArgumentNullException(nameof(encodings));
+            }
+
             Encodings = encodings;
-            SelectedEncoding = Encodings.FirstOrDefault();
+            SelectedEncoding = encodings.FirstOrDefault();
         }
 
         public string GetResult()

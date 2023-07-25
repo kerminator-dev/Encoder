@@ -80,19 +80,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\DialogBuilderService.cs" />
-    <Compile Include="Utils\Collections\UniqueObservableCollection.cs" />
+    <Compile Include="Builders\IBuilder.cs" />
+    <Compile Include="Commands\CopyTextToClipboardCommand.cs" />
+    <Compile Include="Commands\DetectEncodingCommand.cs" />
+    <Compile Include="Commands\OpenFileContentCommand.cs" />
+    <Compile Include="Commands\OpenWindowSelectEncodingCommand.cs" />
+    <Compile Include="Commands\OpenWindowAboutProgramCommand.cs" />
+    <Compile Include="Models\FileInfo.cs" />
+    <Compile Include="ViewModels\ErrorMessagesViewModel.cs" />
+    <Compile Include="Builders\DialogBuilder.cs" />
+    <Compile Include="Collections\UniqueObservableCollection.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Interfaces\IResultOf.cs" />
+    <Compile Include="Interfaces\IDialogResultOf.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SelectEncodingWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AboutProgram.xaml.cs">
+      <DependentUpon>AboutProgram.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectEncodingWindow.xaml.cs">
       <DependentUpon>SelectEncodingWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AboutProgram.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

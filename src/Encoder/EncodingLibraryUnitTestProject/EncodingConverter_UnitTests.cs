@@ -1,6 +1,6 @@
-﻿using EncodingLibrary.Extensions;
+﻿using EncodingLibrary.Converters;
+using EncodingLibrary.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace EncodingLibraryUnitTestProject
 {
@@ -12,7 +12,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "РўРµРєСЃС‚";
-            var actual = text.ChangeEncoding("utf-8", "windows-1251");
+            var actual = text.ChangeEncoding("utf-8", "windows-1251", new DefaultEncodingConverter());
 
             Assert.AreEqual(expected, actual);
         }
@@ -22,7 +22,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "РўРµРєСЃС‚";
             var expected = "Текст";
-            var actual = text.ChangeEncoding("windows-1251", "utf-8");
+            var actual = text.ChangeEncoding("windows-1251", "utf-8", new DefaultEncodingConverter());
 
             Assert.AreEqual(expected, actual);
         }
@@ -32,7 +32,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "п╒п╣п╨я│я┌";
-            var actual = text.ChangeEncoding("utf-8", "koi8-r");
+            var actual = text.ChangeEncoding("utf-8", "koi8-r", new DefaultEncodingConverter());
 
             Assert.AreEqual(expected, actual);
         }
@@ -42,7 +42,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "п╒п╣п╨я│я┌";
             var expected = "Текст";
-            var actual = text.ChangeEncoding("koi8-r", "utf-8");
+            var actual = text.ChangeEncoding("koi8-r", "utf-8", new DefaultEncodingConverter());
 
             Assert.AreEqual(expected, actual);
         }
@@ -52,7 +52,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "�����";
-            var actual = text.ChangeEncoding("iso-8859-5", "utf-8");
+            var actual = text.ChangeEncoding("iso-8859-5", "utf-8", new DefaultEncodingConverter());
 
             Assert.AreEqual(expected, actual);
         }
@@ -62,7 +62,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "Ð¢ÐµÐºÑÑ";
-            var actual = text.ChangeEncoding("utf-8", "iso-8859-1");
+            var actual = text.ChangeEncoding("utf-8", "iso-8859-1", new DefaultEncodingConverter());
 
             Assert.AreEqual(expected, actual);
         }
@@ -72,7 +72,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "ﾐ｢ﾐｵﾐｺﾑ・・";
-            var actual = text.ChangeEncoding("utf-8", "shift_jis");
+            var actual = text.ChangeEncodingWith<DefaultEncodingConverter>("utf-8", "shift_jis");
 
             Assert.AreEqual(expected, actual);
         }
@@ -82,7 +82,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "孝械泻褋褌";  // Chinese characters for 'text' 
-            var actual = text.ChangeEncoding("utf-8", "gb2312");
+            var actual = text.ChangeEncodingWith<DefaultEncodingConverter>("utf-8", "gb2312");
 
             Assert.AreEqual(expected, actual);  // Chinese characters for 'text' 
         }
@@ -92,7 +92,7 @@ namespace EncodingLibraryUnitTestProject
         {
             var text = "Текст";
             var expected = "╨ó╨╡╨║╤ü╤é";  // Chinese characters for 'text' 
-            var actual = text.ChangeEncoding("utf-8", "ibm861");
+            var actual = text.ChangeEncodingWith<DefaultEncodingConverter>("utf-8", "ibm861");
 
             Assert.AreEqual(expected, actual);  // Chinese characters for 'text' 
         }
